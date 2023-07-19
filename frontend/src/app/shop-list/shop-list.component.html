@@ -1,0 +1,8 @@
+<h2>Liste des boutiques</h2>
+
+<ul>
+  <li *ngFor="let shop of shops">
+    {{ shop.name }} - Ouverture : {{ shop.openingHours }} - Fermeture : {{ shop.closingHours }} - Disponible : {{ shop.available ? 'Oui' : 'Non' }} - Date de création : {{ shop.creationDate }}
+  </li>
+</ul>
+
