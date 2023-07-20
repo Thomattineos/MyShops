@@ -1,0 +1,23 @@
+h2 {
+    text-align: center;
+    margin-top: 3%;
+  }
+  
+  .list {
+    margin: 3% auto;
+    width: 90%;
+  }
+  
+  .create-button {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  tr.mat-row:hover {
+    background-color: #f0f0f0; /* Remplacez cette couleur par la couleur souhaitée */
+  }
+
+  .column {
+    text-align: center;
+  }
+  

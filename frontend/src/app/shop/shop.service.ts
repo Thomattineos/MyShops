@@ -14,4 +14,13 @@ export class ShopService {
   getAllShops(): Observable<Shop[]> {
     return this.http.get<Shop[]>(this.apiUrl)
   }
+
+  createShop(newShop: Shop): Observable<Shop> {
+    return this.http.post<Shop>(this.apiUrl, newShop);
+  }
+
+  deleteShop(shop: Shop): Observable<void> {
+    const url = `${this.apiUrl}/${shop.id}`;
+    return this.http.delete<void>(url);
+  }
 }
