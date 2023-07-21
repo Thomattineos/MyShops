@@ -21,6 +21,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CreateShopComponent } from './create-shop/create-shop.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { EditShopComponent } from './edit-shop/edit-shop.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ProductListComponent,
     CategoryListComponent,
     CreateShopComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    EditShopComponent
   ],
   imports: [
     BrowserModule,

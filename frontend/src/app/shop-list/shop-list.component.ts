@@ -3,6 +3,7 @@ import { Shop } from '../shop/shop';
 import { ShopService } from '../shop/shop.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
@@ -14,7 +15,7 @@ export class ShopListComponent implements OnInit {
   shops: Shop[] = [];
   dialogRef!: any;
 
-  constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog) { }
+  constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getShops();
@@ -30,7 +31,7 @@ export class ShopListComponent implements OnInit {
   }
 
   editShop(shop: Shop): void {
-
+    this.router.navigate(['/editShop', shop.id]);
   }
 
   deleteShop(shop: Shop): void {
@@ -44,6 +45,7 @@ export class ShopListComponent implements OnInit {
         this.shopService.deleteShop(shop).subscribe(
           () => {
             this.getShops();
+            this.openSnackBar('Boutique supprimée avec succès', 'Fermer');
           },
           (error: any) => {
             console.error('Erreur lors de la suppression de la boutique :', error);
@@ -52,5 +54,12 @@ export class ShopListComponent implements OnInit {
       }
     });
   }
-  
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000, 
+      horizontalPosition: 'end', 
+      verticalPosition: 'bottom',
+    });
+  }
 }

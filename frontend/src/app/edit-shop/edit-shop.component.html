@@ -1,0 +1,47 @@
+<h2>Modification de la boutique</h2>
+
+<div class="form">
+    <form (ngSubmit)="onSubmit()" #shopForm="ngForm">
+    <div>
+        <mat-form-field>
+        <mat-label>Nom de la boutique</mat-label>
+        <input matInput name="name" required [(ngModel)]="shop.name">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+        <mat-label>Heure d'ouverture</mat-label>
+        <input matInput name="openingHours" required [(ngModel)]="shop.openingHours" placeholder="HH:mm">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+        <mat-label>Heure de fermeture</mat-label>
+        <input matInput name="closingHours" required [(ngModel)]="shop.closingHours" placeholder="HH:mm">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+        <mat-label>Disponible</mat-label>
+        <mat-select name="available" [(ngModel)]="shop.available" required>
+            <mat-option [value]="true">Oui</mat-option>
+            <mat-option [value]="false">Non</mat-option>
+        </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="buttons">
+        <mat-dialog-actions class="center-content">
+            <button mat-icon-button color="primary" (click)="goBack(shopForm)">
+                <mat-icon>keyboard_return</mat-icon>
+              </button>
+            <button mat-icon-button color="primary">
+                <mat-icon>check</mat-icon>
+              </button>
+          </mat-dialog-actions>
+    </div>
+    </form>
+</div>

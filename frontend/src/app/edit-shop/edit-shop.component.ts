@@ -1,0 +1,66 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Shop } from '../shop/shop';
+import { ShopService } from '../shop/shop.service';
+import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-edit-shop',
+  templateUrl: './edit-shop.component.html',
+  styleUrls: ['./edit-shop.component.css']
+})
+export class EditShopComponent implements OnInit {
+  shop: Shop = {} as Shop
+
+  constructor(
+    private shopService: ShopService, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private snackBar: MatSnackBar
+  ) { }
+
+  ngOnInit(): void {
+    const shopIdParam = this.route.snapshot.paramMap.get('id');
+    const shopId = shopIdParam ? parseInt(shopIdParam, 10) : null;
+    
+    if (shopId !== null) {
+    this.shopService.getShopById(shopId).subscribe(
+      (shop: Shop) => {
+        this.shop = shop;        
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des détails de la boutique :', error);
+      }
+    );
+    } else {
+      console.error('Erreur lors de la récupération de l\'id de la boutique');
+    }
+  }
+
+  onSubmit(): void {
+    this.shopService.updateShop(this.shop).subscribe(
+      (editdShop: Shop) => {
+        this.openSnackBar('Boutique modifiée avec succès', 'Fermer');
+        this.router.navigate(['/shops']);
+      },
+      (error: any) => {
+        console.error('Une erreur est survenue : ', error);
+      }
+    );
+  }
+
+  goBack(form: NgForm): void {
+    form.resetForm();
+    this.router.navigate(['/shops']);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000, 
+      horizontalPosition: 'end', 
+      verticalPosition: 'bottom',
+    });
+  }
+}
+

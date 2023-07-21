@@ -15,9 +15,19 @@ export class ShopService {
     return this.http.get<Shop[]>(this.apiUrl)
   }
 
+  getShopById(shopId: number): Observable<Shop> {
+    const url = `${this.apiUrl}/${shopId}`;
+    return this.http.get<Shop>(url);
+  }
+
   createShop(newShop: Shop): Observable<Shop> {
     return this.http.post<Shop>(this.apiUrl, newShop);
   }
+
+  updateShop(updatedShop: Shop): Observable<Shop> {
+    const url = `${this.apiUrl}/${updatedShop.id}`;
+    return this.http.put<Shop>(url, updatedShop);
+  }  
 
   deleteShop(shop: Shop): Observable<void> {
     const url = `${this.apiUrl}/${shop.id}`;
