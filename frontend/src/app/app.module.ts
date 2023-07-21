@@ -22,6 +22,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { CreateShopComponent } from './create-shop/create-shop.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { EditShopComponent } from './edit-shop/edit-shop.component';
+import { TimeFormatDirective } from './directive/time-format.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EditShopComponent } from './edit-shop/edit-shop.component';
     CategoryListComponent,
     CreateShopComponent,
     ConfirmationDialogComponent,
-    EditShopComponent
+    EditShopComponent,
+    TimeFormatDirective
   ],
   imports: [
     BrowserModule,

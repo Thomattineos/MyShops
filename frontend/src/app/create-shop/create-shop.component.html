@@ -11,17 +11,32 @@
 
     <div>
         <mat-form-field>
-        <mat-label>Heure d'ouverture</mat-label>
-        <input matInput name="openingHours" required [(ngModel)]="shop.openingHours" placeholder="HH:mm">
+          <mat-label>Heure d'ouverture</mat-label>
+          <input
+            matInput
+            name="openingHours"
+            required
+            [(ngModel)]="shop.openingHours"
+            placeholder="HH:mm"
+            appTimeFormat
+          >
         </mat-form-field>
-    </div>
-
-    <div>
+      </div>
+      
+      <div>
         <mat-form-field>
-        <mat-label>Heure de fermeture</mat-label>
-        <input matInput name="closingHours" required [(ngModel)]="shop.closingHours" placeholder="HH:mm">
+          <mat-label>Heure de fermeture</mat-label>
+          <input
+            matInput
+            name="closingHours"
+            required
+            [(ngModel)]="shop.closingHours"
+            placeholder="HH:mm"
+            appTimeFormat
+          >
         </mat-form-field>
-    </div>
+      </div>
+      
 
     <div>
         <mat-form-field>
