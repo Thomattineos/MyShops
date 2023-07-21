@@ -14,10 +14,19 @@ h2 {
   }
 
   tr.mat-row:hover {
-    background-color: #f0f0f0; /* Remplacez cette couleur par la couleur souhaitée */
+    background-color: #f0f0f0;
   }
 
   .column {
     text-align: center;
+  }
+  
+  .search-container {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  .search-input {
+    width: 100%;
   }
   

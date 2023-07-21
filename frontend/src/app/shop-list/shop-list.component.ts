@@ -14,6 +14,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 export class ShopListComponent implements OnInit {
   shops: Shop[] = [];
   dialogRef!: any;
+  searchTerm: string = '';
 
   constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -61,5 +62,18 @@ export class ShopListComponent implements OnInit {
       horizontalPosition: 'end', 
       verticalPosition: 'bottom',
     });
+  }
+
+  filterShops(): Shop[] {
+    if (!this.searchTerm) {
+      return this.shops;
+    } else {
+      const searchTermLowerCase = this.searchTerm.toLowerCase();
+      return this.shops.filter(shop => 
+        shop.name.toLowerCase().includes(searchTermLowerCase) ||
+        shop.openingHours.toLowerCase().includes(searchTermLowerCase) ||
+        shop.closingHours.toLowerCase().includes(searchTermLowerCase)
+      );
+    }
   }
 }

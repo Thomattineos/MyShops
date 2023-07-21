@@ -1,7 +1,14 @@
 <h2>Liste des boutiques</h2>
 
 <div class="list">
-  <table mat-table [dataSource]="shops">
+
+  <div class="search-container">
+    <mat-form-field class="search-input">
+      <input matInput type="text" placeholder="Rechercher une boutique" [(ngModel)]="searchTerm">
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="filterShops()">
 
     <div class="column">
       <ng-container matColumnDef="name">
