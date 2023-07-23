@@ -45,7 +45,7 @@ export class EditShopComponent implements OnInit {
     const closingTime = this.parseTime(this.shop.closingHours);
 
     if (openingTime > closingTime) {
-      this.openSnackBar('L\'horaire d\'ouverture doit être inférieur à l\'horaire de fermeture', '');
+      this.openSnackBar('L\'horaire d\'ouverture doit être inférieur à l\'horaire de fermeture', 'Fermer');
       return;
     }
 
@@ -53,7 +53,7 @@ export class EditShopComponent implements OnInit {
       (shops: Shop[]) => {
         const existingShop = shops.find(shop => shop.name === this.shop.name);
         if (existingShop) {
-          this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', '');
+          this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', 'Fermer');
           return;
         }
 

@@ -20,7 +20,7 @@ export class CreateShopComponent {
     const closingTime = this.parseTime(this.shop.closingHours);
 
     if (openingTime > closingTime) {
-      this.openSnackBar('L\'horaire d\'ouverture doit être inférieur à l\'horaire de fermeture', '');
+      this.openSnackBar('L\'horaire d\'ouverture doit être inférieur à l\'horaire de fermeture', 'Fermer');
       return;
     }
 
@@ -28,13 +28,13 @@ export class CreateShopComponent {
       (shops: Shop[]) => {
         const existingShop = shops.find(shop => shop.name === this.shop.name);
         if (existingShop) {
-          this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', '');
+          this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', 'Fermer');
           return;
         }
 
         this.shopService.createShop(this.shop).subscribe(
           () => {
-            this.openSnackBar('Boutique créée avec succès', '');
+            this.openSnackBar('Boutique créée avec succès', 'Fermer');
             this.router.navigate(['/shops']);
           },
           (error: any) => {
@@ -53,12 +53,11 @@ export class CreateShopComponent {
     this.router.navigate(['/shops']);
   }
 
-  openSnackBar(message: string, panelClass: string) {
-    this.snackBar.open(message, '', {
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-      panelClass: [panelClass],
+      verticalPosition: 'bottom'
     });
   }
 

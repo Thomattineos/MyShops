@@ -15,6 +15,8 @@ export class ShopListComponent implements OnInit {
   shops: Shop[] = [];
   dialogRef!: any;
   searchTerm: string = '';
+  sortBy: string = 'name';
+  sortOrder: 'asc' | 'desc' | '' = '';
 
   constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -75,5 +77,31 @@ export class ShopListComponent implements OnInit {
         shop.closingHours.toLowerCase().includes(searchTermLowerCase)
       );
     }
+  }
+
+  sort(column: string) {
+    if (this.sortBy === column) {
+      if (this.sortOrder === 'asc') {
+        this.sortOrder = 'desc';
+      } else if (this.sortOrder === 'desc') {
+        this.sortBy = '';
+        this.sortOrder = '';
+      }
+      else {
+        this.sortOrder = 'asc';
+      }
+    } else {
+      this.sortBy = column;
+      this.sortOrder = 'asc';
+    }
+
+    this.shopService.getAllShops(this.sortBy, this.sortOrder).subscribe(
+      (shops: Shop[]) => {
+        this.shops = shops;
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des boutiques :', error);
+      }
+    );    
   }
 }

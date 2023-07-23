@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Shop } from './shop'
 
@@ -11,8 +11,15 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getAllShops(): Observable<Shop[]> {
-    return this.http.get<Shop[]>(this.apiUrl)
+  getAllShops(sortBy?: string, sortOrder?: string): Observable<Shop[]> {
+    let params = new HttpParams();
+
+    if (sortBy && sortOrder) {
+      params = params.append('sortBy', sortBy);
+      params = params.append('sortOrder', sortOrder);
+    }
+
+    return this.http.get<Shop[]>(this.apiUrl, { params: params });
   }
 
   getShopById(shopId: number): Observable<Shop> {

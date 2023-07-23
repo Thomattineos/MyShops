@@ -3,6 +3,7 @@ package com.univ.rouen.backend.controller;
 import com.univ.rouen.backend.model.Shop;
 import com.univ.rouen.backend.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +19,18 @@ public class ShopController {
     }
 
     @GetMapping
-    public List<Shop> getAllShops() {
-        return shopRepository.findAll();
+    public List<Shop> getAllShops(
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder
+    ) {
+        Sort sort = Sort.by(sortBy);
+        if ("desc".equalsIgnoreCase(sortOrder)) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+
+        return shopRepository.findAll(sort);
     }
 
     @GetMapping("/{id}")

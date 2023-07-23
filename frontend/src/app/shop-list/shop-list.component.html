@@ -12,7 +12,13 @@
 
     <div class="column">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <th mat-header-cell *matHeaderCellDef (click)="sort('name')">
+          <span>Nom</span>
+          <span *ngIf="sortBy === 'name'">
+            <mat-icon *ngIf="sortOrder === 'asc'">arrow_upward</mat-icon>
+            <mat-icon *ngIf="sortOrder === 'desc'">arrow_downward</mat-icon>
+          </span>
+        </th>
         <td mat-cell *matCellDef="let shop">{{ shop.name }}</td>
       </ng-container>
     </div>
@@ -39,7 +45,13 @@
 
     <div class="column">
       <ng-container matColumnDef="creationDate">
-        <th mat-header-cell *matHeaderCellDef>Date de création</th>
+        <th mat-header-cell *matHeaderCellDef (click)="sort('creationDate')">
+          <span>Date de création</span>
+          <span *ngIf="sortBy === 'creationDate'">
+            <mat-icon *ngIf="sortOrder === 'asc'">arrow_upward</mat-icon>
+            <mat-icon *ngIf="sortOrder === 'desc'">arrow_downward</mat-icon>
+          </span>
+        </th>
         <td mat-cell *matCellDef="let shop">{{ shop.creationDate }}</td>
       </ng-container>
     </div>
