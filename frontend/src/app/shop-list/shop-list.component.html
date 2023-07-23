@@ -40,7 +40,10 @@
     <div class="column"></div>
     <ng-container matColumnDef="available">
       <th mat-header-cell *matHeaderCellDef>Disponible</th>
-      <td mat-cell *matCellDef="let shop">{{ shop.available ? 'Oui' : 'Non' }}</td>
+      <td mat-cell *matCellDef="let shop">
+        <mat-icon *ngIf="shop.available === true">check</mat-icon>
+        <mat-icon *ngIf="shop.available === false">close</mat-icon>
+      </td>
     </ng-container>
 
     <div class="column">

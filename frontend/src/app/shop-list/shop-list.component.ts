@@ -51,7 +51,7 @@ export class ShopListComponent implements OnInit {
             this.openSnackBar('Boutique supprimée avec succès', 'Fermer');
           },
           (error: any) => {
-            console.error('Erreur lors de la suppression de la boutique :', error);
+            this.openSnackBar('Erreur lors de la suppression de la boutique', 'Fermer');
           }
         );
       }
@@ -62,7 +62,7 @@ export class ShopListComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 3000, 
       horizontalPosition: 'end', 
-      verticalPosition: 'bottom',
+      verticalPosition: 'bottom'
     });
   }
 
