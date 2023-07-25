@@ -12,4 +12,6 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     @Query("SELECT s FROM Shop s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Shop> searchByName(String search, Pageable pageable);
+
+    Shop findByName(String name);
 }

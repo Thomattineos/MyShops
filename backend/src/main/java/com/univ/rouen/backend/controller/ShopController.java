@@ -74,8 +74,40 @@ public class ShopController {
     }
 
     @PostMapping
-    public Shop createShop(@RequestBody Shop shop) {
-        return shopRepository.save(shop);
+    public ResponseEntity<?> createShop(@RequestBody Shop shop) {
+        Shop existingShop = shopRepository.findByName(shop.getName());
+        if (existingShop != null) {
+            return ResponseEntity.badRequest().body("Le nom de la boutique existe déjà. Veuillez en choisir un autre.");
+        }
+
+        String openingTimeStr = shop.getOpeningHours();
+        String closingTimeStr = shop.getClosingHours();
+
+        if (isValidTimeFormat(openingTimeStr) || isValidTimeFormat(closingTimeStr)) {
+            return ResponseEntity.badRequest().body("Les horaires doivent respecter le format 'HH:MM'");
+        }
+
+        int openingTime = parseTime(openingTimeStr);
+        int closingTime = parseTime(closingTimeStr);
+
+        if (openingTime >= closingTime) {
+            return ResponseEntity.badRequest().body("L'horaire d'ouverture doit être inférieur à l'horaire de fermeture");
+        }
+
+        Shop savedShop = shopRepository.save(shop);
+        return ResponseEntity.ok(savedShop);
+    }
+
+    private boolean isValidTimeFormat(String timeStr) {
+        String timeFormatPattern = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
+        return !timeStr.matches(timeFormatPattern);
+    }
+
+    private int parseTime(String timeStr) {
+        String[] timeParts = timeStr.split(":");
+        int hours = Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+        return hours * 60 + minutes;
     }
 
     @PutMapping("/{id}")

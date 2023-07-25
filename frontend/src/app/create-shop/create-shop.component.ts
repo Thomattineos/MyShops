@@ -16,6 +16,12 @@ export class CreateShopComponent {
   constructor(private shopService: ShopService, private router: Router, private snackBar: MatSnackBar) {}
 
   onSubmit(shopForm: NgForm): void {
+    const timeFormatPattern = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!timeFormatPattern.test(this.shop.openingHours) || !timeFormatPattern.test(this.shop.closingHours)) {
+      this.openSnackBar('Les horaires doivent respecter le format "HH:MM".', 'Fermer');
+      return;
+    }
+
     const openingTime = this.parseTime(this.shop.openingHours);
     const closingTime = this.parseTime(this.shop.closingHours);
 
