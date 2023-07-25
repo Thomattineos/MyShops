@@ -29,7 +29,8 @@ public class ShopController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortOrder,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String search
     ) {
         Sort sort = Sort.by(sortBy);
         if ("desc".equalsIgnoreCase(sortOrder)) {
@@ -39,7 +40,13 @@ public class ShopController {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Shop> shopPage = shopRepository.findAll(pageable);
+        Page<Shop> shopPage ;
+
+        if (!search.isEmpty()) {
+            shopPage = shopRepository.searchByName(search, pageable); // Exemple
+        } else {
+            shopPage = shopRepository.findAll(pageable);
+        }
 
         List<Shop> shops = shopPage.getContent();
         long totalElements = shopPage.getTotalElements();

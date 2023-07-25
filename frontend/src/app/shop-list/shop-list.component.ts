@@ -14,13 +14,13 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 export class ShopListComponent implements OnInit {
   shops: Shop[] = [];
   dialogRef!: any;
-  searchTerm: string = '';
   sortBy: string = '';
   sortOrder: 'asc' | 'desc' | '' = '';
   currentPage: number = 0;
   pageSize: number = 5;
   totalPages: number = 0;
   totalElements: number = 0;
+  search: string = '';
 
   constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -29,7 +29,7 @@ export class ShopListComponent implements OnInit {
   }
 
   getShops(): void {
-    this.shopService.getAllShops(this.sortBy, this.sortOrder, this.currentPage, this.pageSize)
+    this.shopService.getAllShops(this.sortBy, this.sortOrder, this.currentPage, this.pageSize, this.search)
       .subscribe(data => {
         this.shops = data.shops;
         this.totalPages = data.pagination.totalPages;
@@ -74,17 +74,9 @@ export class ShopListComponent implements OnInit {
     });
   }
 
-  filterShops(): Shop[] {
-    if (!this.searchTerm) {
-      return this.shops;
-    } else {
-      const searchTermLowerCase = this.searchTerm.toLowerCase();
-      return this.shops.filter(shop => 
-        shop.name.toLowerCase().includes(searchTermLowerCase) ||
-        shop.openingHours.toLowerCase().includes(searchTermLowerCase) ||
-        shop.closingHours.toLowerCase().includes(searchTermLowerCase)
-      );
-    }
+  filterShops(): void {
+    this.currentPage = 0;
+    this.getShops();
   }
 
   sort(column: string) {

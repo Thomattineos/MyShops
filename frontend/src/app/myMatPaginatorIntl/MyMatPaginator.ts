@@ -11,7 +11,7 @@ export class MyMatPaginatorIntl extends MatPaginatorIntl {
 
   override getRangeLabel = (page: number, pageSize: number, length: number): string => {
     if (length === 0 || pageSize === 0) {
-      return `0 ${this.itemsPerPageLabel} ${length}`;
+      return `0 sur ${length}`;
     }
 
     length = Math.max(length, 0);

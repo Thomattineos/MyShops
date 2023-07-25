@@ -4,11 +4,11 @@
 
   <div class="search-container">
     <mat-form-field class="search-input">
-      <input matInput type="text" placeholder="Rechercher une boutique" [(ngModel)]="searchTerm">
+      <input matInput type="text" placeholder="Rechercher une boutique" [(ngModel)]="search" (input)="filterShops()">
     </mat-form-field>
   </div>
 
-  <table mat-table [dataSource]="filterShops()">
+  <table mat-table [dataSource]="shops">
 
     <div class="column">
       <ng-container matColumnDef="name">

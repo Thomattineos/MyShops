@@ -11,7 +11,7 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getAllShops(sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number): Observable<{ shops: Shop[], pagination: any }> {
+  getAllShops(sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string): Observable<{ shops: Shop[], pagination: any }> {
     let params = new HttpParams();
 
     if (sortBy) {
@@ -25,6 +25,9 @@ export class ShopService {
     }
     if (pageSize) {
       params = params.append('size', pageSize);
+    }
+    if (search) {
+      params = params.append('search', search);
     }
 
     return this.http.get<{ shops: Shop[], pagination: any }>(this.apiUrl, { params: params });
