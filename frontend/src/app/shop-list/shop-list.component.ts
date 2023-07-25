@@ -15,8 +15,12 @@ export class ShopListComponent implements OnInit {
   shops: Shop[] = [];
   dialogRef!: any;
   searchTerm: string = '';
-  sortBy: string = 'name';
+  sortBy: string = '';
   sortOrder: 'asc' | 'desc' | '' = '';
+  currentPage: number = 0;
+  pageSize: number = 5;
+  totalPages: number = 0;
+  totalElements: number = 0;
 
   constructor(private shopService: ShopService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -25,8 +29,12 @@ export class ShopListComponent implements OnInit {
   }
 
   getShops(): void {
-    this.shopService.getAllShops()
-      .subscribe(shops => this.shops = shops);
+    this.shopService.getAllShops(this.sortBy, this.sortOrder, this.currentPage, this.pageSize)
+      .subscribe(data => {
+        this.shops = data.shops;
+        this.totalPages = data.pagination.totalPages;
+        this.totalElements = data.pagination.totalElements;
+      });
   }
 
   createShop(): void {
@@ -95,13 +103,14 @@ export class ShopListComponent implements OnInit {
       this.sortOrder = 'asc';
     }
 
-    this.shopService.getAllShops(this.sortBy, this.sortOrder).subscribe(
-      (shops: Shop[]) => {
-        this.shops = shops;
-      },
-      (error: any) => {
-        console.error('Erreur lors de la récupération des boutiques :', error);
-      }
-    );    
+    this.getShops();
+  }
+
+  goToPage(currentPage: number, pageSize: number) {
+    if (currentPage >= 0 && currentPage <= this.totalPages) {
+      this.currentPage = currentPage;
+      this.pageSize = pageSize;
+      this.getShops();
+    }
   }
 }

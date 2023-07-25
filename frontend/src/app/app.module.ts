@@ -15,6 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MyMatPaginatorIntl } from './myMatPaginatorIntl/MyMatPaginator';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -48,9 +51,10 @@ import { TimeFormatDirective } from './directive/time-format.directive';
     FormsModule,
     MatInputModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule
     ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: MyMatPaginatorIntl }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

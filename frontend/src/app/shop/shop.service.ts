@@ -11,15 +11,23 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getAllShops(sortBy?: string, sortOrder?: string): Observable<Shop[]> {
+  getAllShops(sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number): Observable<{ shops: Shop[], pagination: any }> {
     let params = new HttpParams();
 
-    if (sortBy && sortOrder) {
+    if (sortBy) {
       params = params.append('sortBy', sortBy);
+    }
+    if (sortOrder) {
       params = params.append('sortOrder', sortOrder);
     }
+    if (currentPage) {
+      params = params.append('page', currentPage);
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize);
+    }
 
-    return this.http.get<Shop[]>(this.apiUrl, { params: params });
+    return this.http.get<{ shops: Shop[], pagination: any }>(this.apiUrl, { params: params });
   }
 
   getShopById(shopId: number): Observable<Shop> {

@@ -25,8 +25,8 @@ export class CreateShopComponent {
     }
 
     this.shopService.getAllShops().subscribe(
-      (shops: Shop[]) => {
-        const existingShop = shops.find(shop => shop.name === this.shop.name);
+      (data: { shops: Shop[]; pagination: any; }) => {
+        const existingShop = data.shops.find(shop => shop.name === this.shop.name);
         if (existingShop) {
           this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', 'Fermer');
           return;

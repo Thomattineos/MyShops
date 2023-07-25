@@ -3,10 +3,16 @@ package com.univ.rouen.backend.controller;
 import com.univ.rouen.backend.model.Shop;
 import com.univ.rouen.backend.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/shops")
@@ -19,9 +25,11 @@ public class ShopController {
     }
 
     @GetMapping
-    public List<Shop> getAllShops(
+    public ResponseEntity<Map<String, Object>> getAllShops(
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortOrder
+            @RequestParam(defaultValue = "asc") String sortOrder,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
     ) {
         Sort sort = Sort.by(sortBy);
         if ("desc".equalsIgnoreCase(sortOrder)) {
@@ -30,7 +38,27 @@ public class ShopController {
             sort = sort.ascending();
         }
 
-        return shopRepository.findAll(sort);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Shop> shopPage = shopRepository.findAll(pageable);
+
+        List<Shop> shops = shopPage.getContent();
+        long totalElements = shopPage.getTotalElements();
+        int totalPages = shopPage.getTotalPages();
+        int currentPage = shopPage.getNumber();
+        int pageSize = shopPage.getSize();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("shops", shops);
+
+        Map<String, Object> pagination = new HashMap<>();
+        pagination.put("currentPage", currentPage);
+        pagination.put("pageSize", pageSize);
+        pagination.put("totalPages", totalPages);
+        pagination.put("totalElements", totalElements);
+
+        response.put("pagination", pagination);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -47,7 +75,6 @@ public class ShopController {
     public Shop updateShop(@PathVariable Long id, @RequestBody Shop updatedShop) {
         Shop existingShop = shopRepository.findById(id).orElse(null);
         if (existingShop != null) {
-            // Update the fields you want to change in existingShop
             existingShop.setName(updatedShop.getName());
             existingShop.setOpeningHours(updatedShop.getOpeningHours());
             existingShop.setClosingHours(updatedShop.getClosingHours());
