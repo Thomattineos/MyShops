@@ -26,6 +26,8 @@ import { CreateShopComponent } from './create-shop/create-shop.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { EditShopComponent } from './edit-shop/edit-shop.component';
 import { TimeFormatDirective } from './directive/time-format.directive';
+import { CreateProductComponent } from './create-product/create-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { TimeFormatDirective } from './directive/time-format.directive';
     CreateShopComponent,
     ConfirmationDialogComponent,
     EditShopComponent,
-    TimeFormatDirective
+    TimeFormatDirective,
+    CreateProductComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,

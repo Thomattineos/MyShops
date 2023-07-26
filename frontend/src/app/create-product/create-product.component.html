@@ -1,0 +1,47 @@
+<h2>Création d'un produit</h2>
+
+<div class="form">
+    <form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm">
+    <div>
+        <mat-form-field>
+        <mat-label>Nom du produit</mat-label>
+        <input matInput name="name" required [(ngModel)]="product.name">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+          <mat-label>Prix</mat-label>
+          <input
+            matInput
+            name="price"
+            required
+            [(ngModel)]="product.price"
+          >
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input
+            matInput
+            name="description"
+            [(ngModel)]="product.description"
+          >
+        </mat-form-field>
+      </div>
+
+        <div class="buttons">
+            <mat-dialog-actions class="center-content">
+                <button mat-icon-button color="primary" (click)="goBack(productForm)">
+                    <mat-icon>keyboard_return</mat-icon>
+                </button>
+                <button mat-icon-button color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-dialog-actions>
+        </div>
+    </form>
+</div>
+

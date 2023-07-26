@@ -1,5 +1,6 @@
 package com.univ.rouen.backend.controller;
 
+import com.univ.rouen.backend.model.Product;
 import com.univ.rouen.backend.model.Shop;
 import com.univ.rouen.backend.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class ShopController {
         Page<Shop> shopPage ;
 
         if (!search.isEmpty()) {
-            shopPage = shopRepository.searchByName(search, pageable); // Exemple
+            shopPage = shopRepository.searchByName(search, pageable);
         } else {
             shopPage = shopRepository.findAll(pageable);
         }
