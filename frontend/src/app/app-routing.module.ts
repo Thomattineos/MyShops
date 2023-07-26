@@ -7,6 +7,8 @@ import { CreateShopComponent } from './create-shop/create-shop.component';
 import { EditShopComponent } from './edit-shop/edit-shop.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 const routes: Routes = [
   { path: 'shops', component: ShopListComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'editShop/:id', component: EditShopComponent },
   { path: 'createProduct', component: CreateProductComponent },
   { path: 'editProduct/:id', component: EditProductComponent },
+  { path: 'createCategory', component: CreateCategoryComponent },
+  { path: 'editCategory/:id', component: EditCategoryComponent },
   { path: '', redirectTo: 'shops', pathMatch: 'full' }
 ];
 

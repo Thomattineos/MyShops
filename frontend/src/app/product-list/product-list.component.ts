@@ -49,7 +49,7 @@ export class ProductListComponent implements OnInit {
   deleteProduct(product: Product): void {
     this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '40%',
-      data: { message: 'Êtes-vous sûr de vouloir supprimer le produite ' + product.name + ' ?' }
+      data: { message: 'Êtes-vous sûr de vouloir supprimer le produit ' + product.name + ' ?' }
     });
   
     this.dialogRef.afterClosed().subscribe((result: boolean) => {

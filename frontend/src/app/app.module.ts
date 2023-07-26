@@ -28,6 +28,8 @@ import { EditShopComponent } from './edit-shop/edit-shop.component';
 import { TimeFormatDirective } from './directive/time-format.directive';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     EditShopComponent,
     TimeFormatDirective,
     CreateProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    CreateCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,
