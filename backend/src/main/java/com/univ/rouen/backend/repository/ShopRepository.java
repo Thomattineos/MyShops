@@ -1,5 +1,6 @@
 package com.univ.rouen.backend.repository;
 
+import com.univ.rouen.backend.model.Product;
 import com.univ.rouen.backend.model.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

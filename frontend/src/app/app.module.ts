@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MyMatPaginatorIntl } from './myMatPaginatorIntl/MyMatPaginator';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -60,7 +61,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     MatInputModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule
     ],
   providers: [{ provide: MatPaginatorIntl, useClass: MyMatPaginatorIntl }],
   bootstrap: [AppComponent]

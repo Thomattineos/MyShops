@@ -21,10 +21,10 @@ export class ProductService {
       params = params.append('sortOrder', sortOrder);
     }
     if (currentPage) {
-      params = params.append('page', currentPage);
+      params = params.append('page', currentPage.toString());
     }
     if (pageSize) {
-      params = params.append('size', pageSize);
+      params = params.append('size', pageSize.toString());
     }
     if (search) {
       params = params.append('search', search);

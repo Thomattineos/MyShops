@@ -22,7 +22,7 @@ export class EditShopComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-        const shopIdParam = this.route.snapshot.paramMap.get('id');
+    const shopIdParam = this.route.snapshot.paramMap.get('id');
     const shopId = shopIdParam ? parseInt(shopIdParam, 10) : null;
     
     if (shopId !== null) {
@@ -58,7 +58,7 @@ export class EditShopComponent implements OnInit {
     this.shopService.getAllShops().subscribe(
       (data: { shops: Shop[]; pagination: any; }) => {
         const existingShop = data.shops.find(shop => shop.name === this.shop.name);
-        if (existingShop) {
+        if (existingShop != null && existingShop.name != this.shop.name) {
           this.openSnackBar('Le nom de la boutique existe déjà. Veuillez en choisir un autre.', 'Fermer');
           return;
         }

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../product/product';
+import { Shop } from '../shop/shop';
 import { ProductService } from '../product/product.service';
+import { ShopService } from '../shop/shop.service';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,10 +12,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
-export class CreateProductComponent {
+export class CreateProductComponent implements OnInit{
   product: Product = {} as Product;
+  shops: Shop[] = [];
 
-  constructor(private productService: ProductService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private productService: ProductService, private shopService: ShopService, private router: Router, private snackBar: MatSnackBar) {}
+
+  ngOnInit() {
+    this.shopService.getAllShops().subscribe(
+      (data: { shops: Shop[]; pagination: any }) => {
+        this.shops = data.shops;
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des boutiques :', error);
+      }
+    );
+  }
+  
 
   onSubmit(productForm: NgForm): void {
     this.productService.getAllProducts().subscribe(

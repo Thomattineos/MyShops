@@ -21,10 +21,12 @@ import java.util.Map;
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final ShopRepository shopRepository;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ShopRepository shopRepository) {
         this.productRepository = productRepository;
+        this.shopRepository = shopRepository;
     }
 
     @GetMapping
@@ -76,12 +78,23 @@ public class ProductController {
         return productRepository.findById(id).orElse(null);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         Product existingProduct = productRepository.findByName(product.getName());
 
         if (existingProduct != null) {
             return ResponseEntity.badRequest().body("Le nom du produit existe déjà. Veuillez en choisir un autre.");
+        }
+
+        if (product.getShop() != null) {
+            Long shopId = product.getShop().getId();
+            Shop shop = shopRepository.findById(shopId).orElse(null);
+
+            if (shop != null) {
+                product.setShop(shop);
+            } else {
+                return ResponseEntity.badRequest().body("Boutique non trouvée avec l'ID spécifié.");
+            }
         }
 
         Product savedProduct = productRepository.save(product);
@@ -90,16 +103,24 @@ public class ProductController {
 
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         Product existingProduct = productRepository.findById(id).orElse(null);
         if (existingProduct != null) {
+            if (updatedProduct.getShop() != null) {
+                existingProduct.setShop(updatedProduct.getShop());
+                existingProduct.setName(updatedProduct.getName());
+                existingProduct.setPrice(updatedProduct.getPrice());
+                existingProduct.setDescription(updatedProduct.getDescription());
+            }
+
             existingProduct.setName(updatedProduct.getName());
             existingProduct.setPrice(updatedProduct.getPrice());
             existingProduct.setDescription(updatedProduct.getDescription());
 
-            return productRepository.save(existingProduct);
+            return ResponseEntity.ok(productRepository.save(existingProduct));
         }
-        return null;
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

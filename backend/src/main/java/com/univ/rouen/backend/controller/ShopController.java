@@ -2,6 +2,7 @@ package com.univ.rouen.backend.controller;
 
 import com.univ.rouen.backend.model.Product;
 import com.univ.rouen.backend.model.Shop;
+import com.univ.rouen.backend.repository.ProductRepository;
 import com.univ.rouen.backend.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,18 +12,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/shops")
 public class ShopController {
     private final ShopRepository shopRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ShopController(ShopRepository shopRepository) {
+    public ShopController(ShopRepository shopRepository, ProductRepository productRepository) {
         this.shopRepository = shopRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping
@@ -41,7 +42,7 @@ public class ShopController {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Shop> shopPage ;
+        Page<Shop> shopPage;
 
         if (!search.isEmpty()) {
             shopPage = shopRepository.searchByName(search, pageable);
@@ -54,6 +55,11 @@ public class ShopController {
         int totalPages = shopPage.getTotalPages();
         int currentPage = shopPage.getNumber();
         int pageSize = shopPage.getSize();
+
+        for (Shop shop : shops) {
+            List<Product> products = productRepository.findByShopId(shop.getId());
+            shop.setProducts(products);
+        }
 
         Map<String, Object> response = new HashMap<>();
         response.put("shops", shops);
@@ -69,10 +75,20 @@ public class ShopController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/{id}")
-    public Shop getShopById(@PathVariable Long id) {
-        return shopRepository.findById(id).orElse(null);
+    public ResponseEntity<Shop> getShopById(@PathVariable Long id) {
+        Optional<Shop> optionalShop = shopRepository.findById(id);
+        if (optionalShop.isPresent()) {
+            Shop shop = optionalShop.get();
+            List<Product> products = productRepository.findByShopId(id);
+            shop.setProducts(products);
+            return ResponseEntity.ok(shop);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<?> createShop(@RequestBody Shop shop) {
@@ -112,22 +128,82 @@ public class ShopController {
     }
 
     @PutMapping("/{id}")
-    public Shop updateShop(@PathVariable Long id, @RequestBody Shop updatedShop) {
+    public ResponseEntity<?> updateShop(@PathVariable Long id, @RequestBody Shop updatedShop) {
         Shop existingShop = shopRepository.findById(id).orElse(null);
         if (existingShop != null) {
+
             existingShop.setName(updatedShop.getName());
             existingShop.setOpeningHours(updatedShop.getOpeningHours());
             existingShop.setClosingHours(updatedShop.getClosingHours());
             existingShop.setAvailable(updatedShop.isAvailable());
 
-            return shopRepository.save(existingShop);
+            for (Product product : updatedShop.getProducts()) {
+                product.setShop(existingShop);
+                productRepository.save(product);
+            }
+
+            return ResponseEntity.ok(shopRepository.save(existingShop));
         }
-        return null;
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public void deleteShop(@PathVariable Long id) {
-        shopRepository.deleteById(id);
+        Optional<Shop> shop = shopRepository.findById(id);
+        if (shop.isPresent()) {
+            Shop deletedShop = shop.get();
+            for (Product product : deletedShop.getProducts()) {
+                product.setShop(null);
+            }
+            shopRepository.deleteById(id);
+        }
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<Map<String, Object>> getProductsByShopId(@PathVariable Long id,
+                                                                   @RequestParam(defaultValue = "id") String sortBy,
+                                                                   @RequestParam(defaultValue = "asc") String sortOrder,
+                                                                   @RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "5") int size) {
+
+        Optional<Shop> optionalShop = shopRepository.findById(id);
+        if (optionalShop.isPresent()) {
+            Shop shop = optionalShop.get();
+
+            Sort sort = Sort.by(sortBy);
+            if ("desc".equalsIgnoreCase(sortOrder)) {
+                sort = sort.descending();
+            } else {
+                sort = sort.ascending();
+            }
+
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<Product> productPage = productRepository.getProductsByShopId(shop.getId(), pageable);
+
+            List<Product> products = productPage.getContent();
+            long totalElements = productPage.getTotalElements();
+            int totalPages = productPage.getTotalPages();
+            int currentPage = productPage.getNumber();
+            int pageSize = productPage.getSize();
+
+            List<Product> productDTOs = new ArrayList<>(products);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", productDTOs);
+
+            Map<String, Object> pagination = new HashMap<>();
+            pagination.put("currentPage", currentPage);
+            pagination.put("pageSize", pageSize);
+            pagination.put("totalPages", totalPages);
+            pagination.put("totalElements", totalElements);
+
+            response.put("pagination", pagination);
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 

@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditCategoryComponent implements OnInit {
   category: Category = {} as Category;
-  originalOpeningHours: string = '';
 
   constructor(
     private categoryService: CategoryService, 
@@ -43,7 +42,7 @@ export class EditCategoryComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe(
       (data: { categories: Category[]; pagination: any; }) => {
         const existingCategory = data.categories.find(category => category.name === this.category.name);
-        if (existingCategory) {
+        if (existingCategory != null && existingCategory.name != this.category.name) {
           this.openSnackBar('Le nom de la catégorie existe déjà. Veuillez en choisir un autre.', 'Fermer');
           return;
         }

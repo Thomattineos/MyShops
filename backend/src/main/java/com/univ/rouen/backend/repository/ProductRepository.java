@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -14,4 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> searchByName(String search, Pageable pageable);
 
     Product findByName(String name);
+
+    List<Product> findByShopId(Long id);
+
+    Page<Product> getProductsByShopId(Long id, Pageable pageable);
 }

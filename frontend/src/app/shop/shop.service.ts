@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { Shop } from './shop'
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Shop } from './shop';
+import { Product } from '../product/product';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,27 @@ export class ShopService {
   deleteShop(shop: Shop): Observable<void> {
     const url = `${this.apiUrl}/${shop.id}`;
     return this.http.delete<void>(url);
+  }
+
+  getProductsByShopId(shopId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string): Observable<{ products: Product[], pagination: any }> {
+    let params = new HttpParams();
+
+    if (sortBy) {
+      params = params.append('sortBy', sortBy);
+    }
+    if (sortOrder) {
+      params = params.append('sortOrder', sortOrder);
+    }
+    if (currentPage) {
+      params = params.append('page', currentPage);
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize);
+    }
+    if (search) {
+      params = params.append('search', search);
+    }
+
+    return this.http.get<{ products: Product[], pagination: any }>(this.apiUrl + "/" + shopId + "/products", { params: params });
   }
 }

@@ -1,8 +1,12 @@
 package com.univ.rouen.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "shop")
@@ -10,6 +14,7 @@ public class Shop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
@@ -26,6 +31,10 @@ public class Shop {
 
     @Column(nullable = false)
     private LocalDate creationDate;
+
+    @OneToMany(mappedBy = "shop")
+    @JsonIgnore
+    private List<Product> products = new ArrayList<>();
 
     public Shop() {
         this.creationDate = LocalDate.now();
@@ -85,6 +94,24 @@ public class Shop {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+        product.setShop(this);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
+        product.setShop(null);
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
 

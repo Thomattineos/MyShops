@@ -37,14 +37,22 @@
       </ng-container>
     </div>
 
-    <div class="column"></div>
-    <ng-container matColumnDef="available">
-      <th mat-header-cell *matHeaderCellDef>Disponible</th>
-      <td mat-cell *matCellDef="let shop">
-        <mat-icon *ngIf="shop.available === true">check</mat-icon>
-        <mat-icon *ngIf="shop.available === false">close</mat-icon>
-      </td>
-    </ng-container>
+    <div class="column">
+      <ng-container matColumnDef="available">
+        <th mat-header-cell *matHeaderCellDef>Disponible</th>
+        <td mat-cell *matCellDef="let shop">
+          <mat-icon *ngIf="shop.available === true">check</mat-icon>
+          <mat-icon *ngIf="shop.available === false">close</mat-icon>
+        </td>
+      </ng-container>
+    </div>
+
+    <div class="column">
+      <ng-container matColumnDef="numberOfProducts">
+        <th mat-header-cell *matHeaderCellDef>Nombre de produits</th>
+        <td mat-cell *matCellDef="let shop">{{ shop.numberOfProducts }}</td>
+      </ng-container>
+    </div>
 
     <div class="column">
       <ng-container matColumnDef="creationDate">
@@ -74,9 +82,9 @@
     </div>
 
     <tr mat-header-row
-      *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'creationDate', 'actions']"></tr>
+      *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"></tr>
     <tr mat-row
-      *matRowDef="let row; columns: ['name', 'openingHours', 'closingHours', 'available', 'creationDate', 'actions'];">
+      *matRowDef="let row; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions'];">
     </tr>
   </table>
 

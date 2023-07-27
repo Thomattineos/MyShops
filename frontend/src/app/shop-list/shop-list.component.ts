@@ -34,6 +34,15 @@ export class ShopListComponent implements OnInit {
         this.shops = data.shops;
         this.totalPages = data.pagination.totalPages;
         this.totalElements = data.pagination.totalElements;
+
+        for (const shop of this.shops) {
+          if (shop.id != undefined) {
+            this.shopService.getProductsByShopId(shop.id)
+              .subscribe(data => {
+                shop.numberOfProducts = data.pagination.totalElements;
+              });
+          }
+        }
       });
   }
 
