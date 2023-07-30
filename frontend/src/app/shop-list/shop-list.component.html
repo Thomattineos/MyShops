@@ -83,22 +83,23 @@
 
     <tr mat-header-row
       *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"></tr>
-    <tr mat-row
-      *matRowDef="let row; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions'];">
+    <tr class="rows" mat-row 
+      *matRowDef="let shop; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']" [routerLink]="['/shops', shop.id]" [ngClass]="'table-row-hover'">
     </tr>
   </table>
+</div>
 
-  <div class="pagination">
-    <mat-paginator
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 50]"
-      (page)="goToPage($event.pageIndex, $event.pageSize)"
-    ></mat-paginator>
-  </div>
+<div class="pagination">
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="goToPage($event.pageIndex, $event.pageSize)"
+  ></mat-paginator>
+</div>
 
-  <div class="create-button">
-    <button mat-icon-button color="primary" (click)="createShop()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
+<div class="create-button">
+  <button mat-icon-button color="primary" (click)="createShop()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

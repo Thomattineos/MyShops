@@ -114,4 +114,8 @@ export class ShopListComponent implements OnInit {
       this.getShops();
     }
   }
+
+  onRowClick(shopId: number): void {
+    this.router.navigate(['/shops', shopId]);
+  }  
 }

@@ -165,11 +165,11 @@ public class ShopController {
                                                                    @RequestParam(defaultValue = "id") String sortBy,
                                                                    @RequestParam(defaultValue = "asc") String sortOrder,
                                                                    @RequestParam(defaultValue = "0") int page,
-                                                                   @RequestParam(defaultValue = "5") int size) {
+                                                                   @RequestParam(defaultValue = "5") int size,
+                                                                   @RequestParam(defaultValue = "") String search) {
 
         Optional<Shop> optionalShop = shopRepository.findById(id);
         if (optionalShop.isPresent()) {
-            Shop shop = optionalShop.get();
 
             Sort sort = Sort.by(sortBy);
             if ("desc".equalsIgnoreCase(sortOrder)) {
@@ -179,7 +179,14 @@ public class ShopController {
             }
 
             Pageable pageable = PageRequest.of(page, size, sort);
-            Page<Product> productPage = productRepository.getProductsByShopId(shop.getId(), pageable);
+            Page<Product> productPage;
+
+            if (!search.isEmpty()) {
+                productPage = productRepository.searchByName(search, pageable);
+            } else {
+                productPage = productRepository.getProductsByShopId(id, pageable);
+            }
+
 
             List<Product> products = productPage.getContent();
             long totalElements = productPage.getTotalElements();

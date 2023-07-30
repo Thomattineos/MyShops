@@ -29,3 +29,9 @@ h2 {
     width: 100%;
   }
   
+  .table-row-hover:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }.rows:hover {
+    background-color: #f0f0f0;
+  }

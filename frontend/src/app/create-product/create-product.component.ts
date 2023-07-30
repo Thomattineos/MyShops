@@ -31,29 +31,20 @@ export class CreateProductComponent implements OnInit{
   
 
   onSubmit(productForm: NgForm): void {
-    this.productService.getAllProducts().subscribe(
-      (data: { products: Product[]; pagination: any; }) => {
-        const existingProduct = data.products.find(product => product.name === this.product.name);
-        if (existingProduct) {
-          this.openSnackBar('Le nom du produit existe déjà. Veuillez en choisir un autre.', 'Fermer');
-          return;
-        }
-
-        this.productService.createProduct(this.product).subscribe(
-          () => {
-            this.openSnackBar('Produit créé avec succès', 'Fermer');
-            this.router.navigate(['/products']);
-          },
-          (error: any) => {
-            console.error('Erreur lors de la création du produit :', error);
-          }
-        );
+    this.productService.createProduct(this.product).subscribe(
+      () => {
+        this.openSnackBar('Produit créé avec succès', 'Fermer');
+        this.router.navigate(['/products']);
       },
       (error: any) => {
-        console.error('Erreur lors de la récupération des produits :', error);
+        console.error('Erreur lors de la création du produit :', error);
+        if (error.status === 400) {
+          this.openSnackBar('Le nom du produit existe déjà. Veuillez en choisir un autre.', 'Fermer');
+        }
       }
     );
   }
+  
 
   goBack(form: NgForm): void {
     form.resetForm();

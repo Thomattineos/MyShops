@@ -31,6 +31,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { ShopDetailComponent } from './shop-detail/shop-detail.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     CreateProductComponent,
     EditProductComponent,
     CreateCategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    ShopDetailComponent
   ],
   imports: [
     BrowserModule,
