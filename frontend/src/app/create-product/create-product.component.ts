@@ -31,6 +31,10 @@ export class CreateProductComponent implements OnInit{
   
 
   onSubmit(productForm: NgForm): void {
+    if (!productForm.valid) {
+      return;
+    }
+  
     this.productService.createProduct(this.product).subscribe(
       () => {
         this.openSnackBar('Produit créé avec succès', 'Fermer');
@@ -44,6 +48,7 @@ export class CreateProductComponent implements OnInit{
       }
     );
   }
+  
   
 
   goBack(form: NgForm): void {

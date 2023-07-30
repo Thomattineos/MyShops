@@ -80,12 +80,6 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
-        Product existingProduct = productRepository.findByName(product.getName());
-
-        if (existingProduct != null) {
-            return ResponseEntity.badRequest().body("Le nom du produit existe déjà. Veuillez en choisir un autre.");
-        }
-
         if (product.getShop() != null) {
             Long shopId = product.getShop().getId();
             Shop shop = shopRepository.findById(shopId).orElse(null);
@@ -97,9 +91,16 @@ public class ProductController {
             }
         }
 
+        Product existingProduct = productRepository.findByName(product.getName());
+
+        if (existingProduct != null) {
+            return ResponseEntity.badRequest().body("Le nom du produit existe déjà. Veuillez en choisir un autre.");
+        }
+
         Product savedProduct = productRepository.save(product);
         return ResponseEntity.ok(savedProduct);
     }
+
 
 
     @PutMapping("/{id}")
