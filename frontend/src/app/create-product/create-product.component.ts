@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../product/product';
 import { Shop } from '../shop/shop';
+import { Category } from '../category/category'; // Assurez-vous d'importer le modèle Category
 import { ProductService } from '../product/product.service';
 import { ShopService } from '../shop/shop.service';
+import { CategoryService } from '../category/category.service'; // Assurez-vous d'importer le service CategoryService
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,11 +14,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
-export class CreateProductComponent implements OnInit{
+export class CreateProductComponent implements OnInit {
   product: Product = {} as Product;
   shops: Shop[] = [];
+  categories: Category[] = [];
+  selectedCategories: Category[] = [];
 
-  constructor(private productService: ProductService, private shopService: ShopService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private productService: ProductService,
+    private shopService: ShopService,
+    private categoryService: CategoryService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.shopService.getAllShops("", "", 0, 9999).subscribe(
@@ -27,14 +37,24 @@ export class CreateProductComponent implements OnInit{
         console.error('Erreur lors de la récupération des boutiques :', error);
       }
     );
+
+    this.categoryService.getAllCategories().subscribe(
+      (data: { categories: Category[] }) => {
+        this.categories = data.categories;
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des catégories :', error);
+      }
+    );
   }
-  
 
   onSubmit(productForm: NgForm): void {
     if (!productForm.valid) {
       return;
     }
-  
+
+    this.product.categories = this.selectedCategories;
+
     this.productService.createProduct(this.product).subscribe(
       () => {
         this.openSnackBar('Produit créé avec succès', 'Fermer');
@@ -48,8 +68,6 @@ export class CreateProductComponent implements OnInit{
       }
     );
   }
-  
-  
 
   goBack(form: NgForm): void {
     form.resetForm();

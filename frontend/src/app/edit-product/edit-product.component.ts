@@ -6,6 +6,8 @@
   import { NgForm } from '@angular/forms';
   import { MatSnackBar } from '@angular/material/snack-bar';
   import { ShopService } from '../shop/shop.service';
+import { Category } from '../category/category';
+import { CategoryService } from '../category/category.service';
 
   @Component({
     selector: 'app-edit-product',
@@ -17,10 +19,13 @@
     shops: Shop[] = [];
     originalShop: Shop = {} as Shop;
     shopName: string = "";
+    selectedCategories: Category[] = [];
+    categories: Category[] = [];
 
     constructor(
       private productService: ProductService,
       private shopService: ShopService, 
+      private categoryService: CategoryService,
       private router: Router, 
       private route: ActivatedRoute, 
       private snackBar: MatSnackBar
@@ -34,6 +39,16 @@
         (error: any) => {
           console.error('Erreur lors de la récupération des boutiques :', error);
           this.openSnackBar('Les boutiques n\'ont pas pu être récupérées', 'Fermer');
+        }
+      );
+
+      this.categoryService.getAllCategories("", "", 0, 9999).subscribe(
+        (data: { categories: Category[]; pagination: any }) => {
+          this.categories = data.categories;
+        },
+        (error: any) => {
+          console.error('Erreur lors de la récupération des catégories :', error);
+          this.openSnackBar('Les catégories n\'ont pas pu être récupérées', 'Fermer');
         }
       );
 
@@ -66,6 +81,8 @@
             this.openSnackBar('Le nom du produit existe déjà. Veuillez en choisir un autre.', 'Fermer');
             return;
           }
+
+          this.product.categories = this.selectedCategories;
 
           this.productService.updateProduct(this.product).subscribe(
             () => {

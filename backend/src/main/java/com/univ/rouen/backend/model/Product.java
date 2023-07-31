@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -29,8 +29,13 @@ public class Product {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Shop shop;
 
-    @ManyToMany(mappedBy = "products")
-    Set<Category> categories;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    List<Category> categories;
 
     public Product() { }
 
@@ -79,11 +84,21 @@ public class Product {
         this.shop = shop;
     }
 
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
+        category.getProducts().add(this);
+    }
+
+    public void removeCategory(Category category) {
+        categories.remove(category);
+        category.getProducts().remove(this);
     }
 }

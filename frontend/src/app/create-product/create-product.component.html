@@ -41,6 +41,15 @@
           </mat-form-field>
         </div>
 
+        <div>
+          <mat-form-field>
+            <mat-label>Sélectionner une ou plusieurs catégories</mat-label>
+            <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
+              <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="buttons">
             <mat-dialog-actions class="center-content">
                 <button mat-icon-button color="primary" (click)="goBack(productForm)">

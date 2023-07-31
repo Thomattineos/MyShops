@@ -1,0 +1,77 @@
+<h2>Détails du produit "{{ product.name }}"</h2>
+
+<div class="product-container">
+    <div *ngIf="product" class="product-details">
+        <div class="detail-item">
+          <label class="detail-label">Prix :</label>
+          <p class="detail-value">{{ product.price }}</p>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Description :</label>
+          <p class="detail-value">{{ product.description }}</p>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Boutique associée :</label>
+          <p class="detail-value">{{ product.shop ? product.shop.name : "Aucune" }}</p>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Nombre de catégories :</label>
+          <p class="detail-value">{{ categories.length }}</p>
+        </div>
+      </div>
+      
+
+    <div class="list">
+
+        <div class="search-container">
+            <mat-form-field class="search-input">
+                <input matInput type="text" placeholder="Rechercher une catégorie" [(ngModel)]="search"
+                    (input)="filterCategories()">
+            </mat-form-field>
+        </div>
+
+        <table mat-table [dataSource]="categories">
+
+            <div class="column">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef (click)="sort('name')">
+                        <span>Nom</span>
+                        <span *ngIf="sortBy === 'name'">
+                            <mat-icon *ngIf="sortOrder === 'asc'">arrow_upward</mat-icon>
+                            <mat-icon *ngIf="sortOrder === 'desc'">arrow_downward</mat-icon>
+                        </span>
+                    </th>
+                    <td mat-cell *matCellDef="let category">{{ category.name }}</td>
+                </ng-container>
+            </div>
+
+            <div class="column">
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let category">
+                        <button mat-icon-button color="primary" (click)="editCategory(category)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteCategory(category)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+            </div>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];">
+            </tr>
+        </table>
+
+        <div class="pagination">
+            <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
+                (page)="goToPage($event.pageIndex, $event.pageSize)"></mat-paginator>
+        </div>
+
+        <div class="create-button">
+            <button mat-icon-button color="primary" (click)="createCategory()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>

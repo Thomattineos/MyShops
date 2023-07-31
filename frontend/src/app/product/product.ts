@@ -1,4 +1,5 @@
 import { Shop } from "../shop/shop";
+import { Category } from "../category/category";
 
 export interface Product {
     id ?: number;
@@ -6,4 +7,5 @@ export interface Product {
     price: number;
     description?: string;
     shop: Shop | null;
+    categories: Category[] | null;
   }

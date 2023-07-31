@@ -1,8 +1,9 @@
 package com.univ.rouen.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -16,12 +17,9 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    Set<Product> products;
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    List<Product> products;
 
     public Category() { }
 
@@ -45,11 +43,21 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getCategories().remove(this);
     }
 }

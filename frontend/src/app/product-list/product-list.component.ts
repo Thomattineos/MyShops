@@ -106,4 +106,8 @@ export class ProductListComponent implements OnInit {
       this.getProducts();
     }
   }
+
+  onRowClick(productId: number): void {
+    this.router.navigate(['/products', productId]);
+  } 
 }
