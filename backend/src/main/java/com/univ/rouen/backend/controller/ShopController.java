@@ -1,5 +1,6 @@
 package com.univ.rouen.backend.controller;
 
+import com.univ.rouen.backend.model.Category;
 import com.univ.rouen.backend.model.Product;
 import com.univ.rouen.backend.model.Shop;
 import com.univ.rouen.backend.repository.ProductRepository;
@@ -195,6 +196,13 @@ public class ShopController {
 
             List<Product> productDTOs = new ArrayList<>(products);
 
+            Set<Long> distinctCategories = new HashSet<>();
+            for (Product product : products) {
+                for (Category category : product.getCategories()) {
+                    distinctCategories.add(category.getId());
+                }
+            }
+
             Map<String, Object> response = new HashMap<>();
             response.put("products", productDTOs);
 
@@ -205,6 +213,9 @@ public class ShopController {
             pagination.put("totalElements", totalElements);
 
             response.put("pagination", pagination);
+
+            // Add the numberOfCategories to the response
+            response.put("numberOfCategories", distinctCategories.size());
 
             return ResponseEntity.ok(response);
         } else {

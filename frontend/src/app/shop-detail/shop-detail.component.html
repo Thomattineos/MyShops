@@ -3,27 +3,31 @@
 <div class="shop-container">
     <div *ngIf="shop" class="shop-details">
         <div class="detail-item">
-          <label class="detail-label">Date de création :</label>
-          <p class="detail-value">{{ shop.creationDate }}</p>
+            <label class="detail-label">Date de création :</label>
+            <p class="detail-value">{{ shop.creationDate }}</p>
         </div>
         <div class="detail-item">
-          <label class="detail-label">Horaires d'ouverture :</label>
-          <p class="detail-value">{{ shop.openingHours }}</p>
+            <label class="detail-label">Horaires d'ouverture :</label>
+            <p class="detail-value">{{ shop.openingHours }}</p>
         </div>
         <div class="detail-item">
-          <label class="detail-label">Horaires de fermeture :</label>
-          <p class="detail-value">{{ shop.closingHours }}</p>
+            <label class="detail-label">Horaires de fermeture :</label>
+            <p class="detail-value">{{ shop.closingHours }}</p>
         </div>
         <div class="detail-item">
-          <label class="detail-label">En congé :</label>
-          <p class="detail-value">{{ shop.available ? 'Non' : 'Oui' }}</p>
+            <label class="detail-label">En congé :</label>
+            <p class="detail-value">{{ shop.available ? 'Non' : 'Oui' }}</p>
         </div>
         <div class="detail-item">
-          <label class="detail-label">Nombre de produits :</label>
-          <p class="detail-value">{{ products.length }}</p>
+            <label class="detail-label">Nombre de produits :</label>
+            <p class="detail-value">{{ products.length }}</p>
         </div>
-      </div>
-      
+        <div class="detail-item">
+            <label class="detail-label">Nombre de catégories associées aux produits :</label>
+            <p class="detail-value">{{ nbCategories }}</p>
+        </div>
+    </div>
+
 
     <div class="list">
 

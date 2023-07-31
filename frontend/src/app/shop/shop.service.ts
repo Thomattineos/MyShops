@@ -53,7 +53,7 @@ export class ShopService {
     return this.http.delete<void>(url);
   }
 
-  getProductsByShopId(shopId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string): Observable<{ products: Product[], pagination: any }> {
+  getProductsByShopId(shopId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string): Observable<{ products: Product[], numberOfCategories: number, pagination: any }> {
     let params = new HttpParams();
 
     if (sortBy) {
@@ -72,6 +72,6 @@ export class ShopService {
       params = params.append('search', search);
     }
 
-    return this.http.get<{ products: Product[], pagination: any }>(this.apiUrl + "/" + shopId + "/products", { params: params });
+    return this.http.get<{ products: Product[], numberOfCategories: number, pagination: any }>(this.apiUrl + "/" + shopId + "/products", { params: params });
   }
 }

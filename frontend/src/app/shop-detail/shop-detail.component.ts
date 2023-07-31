@@ -26,6 +26,7 @@ export class ShopDetailComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   search: string = '';
+  nbCategories: number = 0;
 
   constructor(private route: ActivatedRoute, private shopService: ShopService, private productService: ProductService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -50,10 +51,11 @@ export class ShopDetailComponent implements OnInit {
 
   getProductsByShopId(): void {
     this.shopService.getProductsByShopId(this.shopId, this.sortBy, this.sortOrder, this.currentPage, this.pageSize, this.search).subscribe(
-      (data: { products: Product[]; pagination: any }) => {
+      (data: { products: Product[]; numberOfCategories: number; pagination: any }) => {
         this.products = data.products;
         this.totalPages = data.pagination.totalPages;
         this.totalElements = data.pagination.totalElements;
+        this.nbCategories = data.numberOfCategories;
       },
       (error: any) => {
         console.error('Erreur lors de la récupération des produits de la boutique :', error);
