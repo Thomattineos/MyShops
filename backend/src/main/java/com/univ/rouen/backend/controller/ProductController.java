@@ -174,7 +174,7 @@ public class ProductController {
             Page<Category> categoryPage;
 
             if (!search.isEmpty()) {
-                categoryPage = categoryRepository.searchByNameAndProducts_Id(search, id, pageable);
+                categoryPage = categoryRepository.searchByNameAndProductId(search, id, pageable);
             } else {
                 categoryPage = categoryRepository.getCategoriesByProducts_Id(id, pageable);
             }
@@ -203,5 +203,4 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

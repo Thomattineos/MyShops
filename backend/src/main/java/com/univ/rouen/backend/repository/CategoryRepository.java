@@ -1,7 +1,6 @@
 package com.univ.rouen.backend.repository;
 
 import com.univ.rouen.backend.model.Category;
-import com.univ.rouen.backend.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Category findByName(String name);
 
-    Page<Category> searchByNameAndProducts_Id(String name, Long productId, Pageable pageable);
+    @Query("SELECT c FROM Category c JOIN c.products p WHERE p.id = :productId AND LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<Category> searchByNameAndProductId(@Param("search") String search, @Param("productId") Long productId, Pageable pageable);
 
     Page<Category> getCategoriesByProducts_Id(Long id, Pageable pageable);
 }
