@@ -26,7 +26,7 @@ export class EditProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.shopService.getAllShops().subscribe(
+    this.shopService.getAllShops("", "", 0, 9999).subscribe(
       (data: { shops: Shop[]; pagination: any }) => {
         this.shops = data.shops;
       },

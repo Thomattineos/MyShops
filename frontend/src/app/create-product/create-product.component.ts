@@ -19,7 +19,7 @@ export class CreateProductComponent implements OnInit{
   constructor(private productService: ProductService, private shopService: ShopService, private router: Router, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.shopService.getAllShops().subscribe(
+    this.shopService.getAllShops("", "", 0, 9999).subscribe(
       (data: { shops: Shop[]; pagination: any }) => {
         this.shops = data.shops;
       },
