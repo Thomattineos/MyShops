@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from './category';
+import { Product } from '../product/product';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,27 @@ export class CategoryService {
   deleteCategory(category: Category): Observable<void> {
     const url = `${this.apiUrl}/${category.id}`;
     return this.http.delete<void>(url);
+  }
+
+  getProductsByCategoryId(categoryId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string): Observable<{ products: Product[], pagination: any }> {
+    let params = new HttpParams();
+
+    if (sortBy) {
+      params = params.append('sortBy', sortBy);
+    }
+    if (sortOrder) {
+      params = params.append('sortOrder', sortOrder);
+    }
+    if (currentPage) {
+      params = params.append('page', currentPage);
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize);
+    }
+    if (search) {
+      params = params.append('search', search);
+    }
+
+    return this.http.get<{ products: Product[], pagination: any }>(this.apiUrl + "/" + categoryId + "/products", { params: params });
   }
 }

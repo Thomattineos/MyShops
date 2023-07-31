@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../product/product';
 import { Shop } from '../shop/shop';
-import { Category } from '../category/category'; // Assurez-vous d'importer le modèle Category
+import { Category } from '../category/category';
 import { ProductService } from '../product/product.service';
 import { ShopService } from '../shop/shop.service';
-import { CategoryService } from '../category/category.service'; // Assurez-vous d'importer le service CategoryService
+import { CategoryService } from '../category/category.service';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

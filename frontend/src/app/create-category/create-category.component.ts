@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from '../category/category';
+import { Product } from '../product/product';
 import { CategoryService } from '../category/category.service';
+import { ProductService } from '../product/product.service';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,14 +12,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './create-category.component.html',
   styleUrls: ['./create-category.component.css']
 })
-export class CreateCategoryComponent {
+export class CreateCategoryComponent implements OnInit {
   category: Category = {} as Category;
+  products: Product[] = [];
 
-  constructor(private categoryService: CategoryService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.productService.getAllProducts("", "", 0, 9999).subscribe(
+      (data: { products: Product[]; pagination: any }) => {
+        this.products = data.products;
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des produits :', error);
+      }
+    );
+  }
 
   onSubmit(categoryForm: NgForm): void {
     this.categoryService.getAllCategories().subscribe(
-      (data: { categories: Category[]; pagination: any; }) => {
+      (data: { categories: Category[]; pagination: any }) => {
         const existingCategory = data.categories.find(category => category.name === this.category.name);
         if (existingCategory) {
           this.openSnackBar('Le nom de la catégorie existe déjà. Veuillez en choisir un autre.', 'Fermer');
