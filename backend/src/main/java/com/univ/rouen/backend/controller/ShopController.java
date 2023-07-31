@@ -182,11 +182,10 @@ public class ShopController {
             Page<Product> productPage;
 
             if (!search.isEmpty()) {
-                productPage = productRepository.searchByName(search, pageable);
+                productPage = productRepository.searchByNameAndShopId(search, id, pageable);
             } else {
                 productPage = productRepository.getProductsByShopId(id, pageable);
             }
-
 
             List<Product> products = productPage.getContent();
             long totalElements = productPage.getTotalElements();
