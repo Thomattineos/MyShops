@@ -20,7 +20,7 @@
         </div>
         <div class="detail-item">
             <label class="detail-label">Nombre de produits :</label>
-            <p class="detail-value">{{ products.length }}</p>
+            <p class="detail-value">{{ totalElements }}</p>
         </div>
         <div class="detail-item">
             <label class="detail-label">Nombre de catégories associées aux produits :</label>
@@ -31,11 +31,19 @@
 
     <div class="list">
 
-        <div class="search-container">
-            <mat-form-field class="search-input">
-                <input matInput type="text" placeholder="Rechercher un produit" [(ngModel)]="search"
-                    (input)="filterProducts()">
-            </mat-form-field>
+        <div class="header">
+            <div class="create-button">
+                <button mat-icon-button color="primary" (click)="createProduct()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+
+            <div class="search-container">
+                <mat-form-field class="search-input">
+                    <input matInput type="text" placeholder="Rechercher un produit" [(ngModel)]="search"
+                        (input)="filterProducts()">
+                </mat-form-field>
+            </div>
         </div>
 
         <table mat-table [dataSource]="products">
@@ -91,15 +99,9 @@
             <tr mat-row *matRowDef="let row; columns: ['name', 'price', 'description', 'actions'];">
             </tr>
         </table>
-
-        <div class="pagination">
-            <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
-                (page)="goToPage($event.pageIndex, $event.pageSize)"></mat-paginator>
-        </div>
-
-        <div class="create-button">
-            <button mat-icon-button color="primary" (click)="createProduct()">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
     </div>
+</div>
+<div class="pagination">
+    <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="goToPage($event.pageIndex, $event.pageSize)"></mat-paginator>
+</div>

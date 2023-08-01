@@ -2,10 +2,18 @@
 
 <div class="list">
 
-  <div class="search-container">
-    <mat-form-field class="search-input">
-      <input matInput type="text" placeholder="Rechercher un produit" [(ngModel)]="search" (input)="filterProducts()">
-    </mat-form-field>
+  <div class="header">
+    <div class="create-button">
+      <button mat-icon-button color="primary" (click)="createProduct()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="search-container">
+      <mat-form-field class="search-input">
+        <input matInput type="text" placeholder="Rechercher un produit" [(ngModel)]="search" (input)="filterProducts()">
+      </mat-form-field>
+    </div>
   </div>
 
   <table mat-table [dataSource]="products">
@@ -24,17 +32,17 @@
     </div>
 
     <div class="column">
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef (click)="sort('price')">
-            <span>Prix</span>
-            <span *ngIf="sortBy === 'price'">
-              <mat-icon *ngIf="sortOrder === 'asc'">arrow_upward</mat-icon>
-              <mat-icon *ngIf="sortOrder === 'desc'">arrow_downward</mat-icon>
-            </span>
-          </th>
-          <td mat-cell *matCellDef="let product">{{ product.price }} €</td>
-        </ng-container>
-      </div>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef (click)="sort('price')">
+          <span>Prix</span>
+          <span *ngIf="sortBy === 'price'">
+            <mat-icon *ngIf="sortOrder === 'asc'">arrow_upward</mat-icon>
+            <mat-icon *ngIf="sortOrder === 'desc'">arrow_downward</mat-icon>
+          </span>
+        </th>
+        <td mat-cell *matCellDef="let product">{{ product.price }} €</td>
+      </ng-container>
+    </div>
 
     <div class="column">
       <ng-container matColumnDef="description">
@@ -57,24 +65,14 @@
       </ng-container>
     </div>
 
-    <tr mat-header-row
-      *matHeaderRowDef="['name', 'price', 'description', 'actions']"></tr>
-    <tr mat-row
-      *matRowDef="let product; columns: ['name', 'price', 'description', 'actions']" [routerLink]="['/products', product.id]" [ngClass]="'table-row-hover'">
+    <tr mat-header-row *matHeaderRowDef="['name', 'price', 'description', 'actions']"></tr>
+    <tr mat-row *matRowDef="let product; columns: ['name', 'price', 'description', 'actions']"
+      [routerLink]="['/products', product.id]" [ngClass]="'table-row-hover'">
     </tr>
   </table>
-
-  <div class="pagination">
-    <mat-paginator
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 50]"
-      (page)="goToPage($event.pageIndex, $event.pageSize)"
-    ></mat-paginator>
   </div>
 
-  <div class="create-button">
-    <button mat-icon-button color="primary" (click)="createProduct()">
-      <mat-icon>add</mat-icon>
-    </button>
+  <div class="pagination">
+    <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="goToPage($event.pageIndex, $event.pageSize)"></mat-paginator>
   </div>

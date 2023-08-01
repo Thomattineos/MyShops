@@ -6,4 +6,9 @@ h2 {
 .form {
     text-align: center;
     margin: 3% auto;
+    background-color: #fff;
+    width: 20%;
+    padding: 1%;
+    padding-top: 2%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }

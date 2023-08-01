@@ -1,19 +1,14 @@
 h2 {
     text-align: center;
-    margin-top: 3%;
+    margin-top: 1%;
   }
   
   .list {
-    margin: 3% auto;
-    width: 90%;
-  }
-  
-  .create-button {
-    text-align: center;
-  }
-
-  tr.mat-row:hover {
-    background-color: #f0f0f0;
+    margin: 1% auto;
+    width: 80%;
+    padding: 2%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
   }
 
   .column {
@@ -23,6 +18,7 @@ h2 {
   .search-container {
     margin-left: 3%;
     margin-right: 3%;
+    flex: 1;
   }
 
   .search-input {
@@ -30,8 +26,44 @@ h2 {
   }
   
   .table-row-hover:hover {
-    background-color: #f1f1f1;
+    background-color: #45a049;
     cursor: pointer;
   }.rows:hover {
-    background-color: #f0f0f0;
+    background-color: #45a049;
   }
+
+  .pagination {
+    text-align: center;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  mat-paginator {
+    background-color: #f7f7f7;
+  }
+
+  .header {
+    display: flex;
+  }
+
+  .create-button {
+    text-align: center;
+  }
+  
+  .create-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .create-button button:hover {
+    background-color: #45a049;
+  }
+
+  
+  

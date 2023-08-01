@@ -2,10 +2,18 @@
 
 <div class="list">
 
-  <div class="search-container">
-    <mat-form-field class="search-input">
-      <input matInput type="text" placeholder="Rechercher une boutique" [(ngModel)]="search" (input)="filterShops()">
-    </mat-form-field>
+  <div class="header">
+    <div class="create-button">
+      <button mat-icon-button color="primary" (click)="createShop()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="search-container">
+      <mat-form-field class="search-input">
+        <input matInput type="text" placeholder="Rechercher une boutique" [(ngModel)]="search" (input)="filterShops()">
+      </mat-form-field>
+    </div>
   </div>
 
   <table mat-table [dataSource]="shops">
@@ -82,24 +90,16 @@
     </div>
 
     <tr mat-header-row
-      *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"></tr>
-    <tr class="rows" mat-row 
-      *matRowDef="let shop; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']" [routerLink]="['/shops', shop.id]" [ngClass]="'table-row-hover'">
+      *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']">
+    </tr>
+    <tr class="rows" mat-row
+      *matRowDef="let shop; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"
+      [routerLink]="['/shops', shop.id]" [ngClass]="'table-row-hover'">
     </tr>
   </table>
 </div>
 
 <div class="pagination">
-  <mat-paginator
-    [length]="totalElements"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25, 50]"
-    (page)="goToPage($event.pageIndex, $event.pageSize)"
-  ></mat-paginator>
-</div>
-
-<div class="create-button">
-  <button mat-icon-button color="primary" (click)="createShop()">
-    <mat-icon>add</mat-icon>
-  </button>
+  <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="goToPage($event.pageIndex, $event.pageSize)"></mat-paginator>
 </div>

@@ -34,7 +34,7 @@
 
         <div>
           <mat-form-field>
-            <mat-label>Sélectionner une boutique</mat-label>
+            <mat-label>Boutique</mat-label>
             <mat-select name="shop" [(ngModel)]="product.shop">
               <mat-option *ngFor="let shop of shops" [value]="shop">{{ shop.name }}</mat-option>
             </mat-select>
@@ -43,7 +43,7 @@
 
         <div>
           <mat-form-field>
-            <mat-label>Sélectionner une ou plusieurs catégories</mat-label>
+            <mat-label>Catégorie(s)</mat-label>
             <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
               <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
             </mat-select>
