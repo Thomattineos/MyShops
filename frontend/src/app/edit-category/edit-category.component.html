@@ -4,20 +4,24 @@
     <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
         <div>
             <mat-form-field>
-            <mat-label>Nom de la cxatégorie</mat-label>
-            <input matInput name="name" required [(ngModel)]="category.name">
+                <mat-label>Nom de la cxatégorie</mat-label>
+                <input matInput name="name" required [(ngModel)]="category.name">
             </mat-form-field>
         </div>
 
-        <div class="buttons">
-            <mat-dialog-actions class="center-content">
-                <button type="button" mat-icon-button color="primary" (click)="goBack(categoryForm)">
-                    <mat-icon>keyboard_return</mat-icon>
-                </button>
-                <button type="submit" mat-icon-button color="primary">
-                    <mat-icon>check</mat-icon>
-                </button>
-            </mat-dialog-actions>
-        </div>
+        <mat-dialog-actions class="center-content">
+            <div class="buttons">
+                <div class="cancel-button">
+                    <button type="button" mat-icon-button color="primary" (click)="goBack(categoryForm)">
+                        <mat-icon>keyboard_return</mat-icon>
+                    </button>
+                </div>
+                <div class="edit-button">
+                    <button type="submit" mat-icon-button color="primary">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-dialog-actions>
     </form>
 </div>

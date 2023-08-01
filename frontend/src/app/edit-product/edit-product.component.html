@@ -1,64 +1,59 @@
 <h2>Modification du produit</h2>
 
 <div class="form">
-    <form (ngSubmit)="onSubmit()" #productForm="ngForm">
-        <div>
-            <mat-form-field>
-            <mat-label>Nom du produit</mat-label>
-            <input matInput name="name" required [(ngModel)]="product.name">
-            </mat-form-field>
-        </div>
-    
-        <div>
-            <mat-form-field>
-              <mat-label>Prix</mat-label>
-              <input
-                matInput
-                name="price"
-                required
-                [(ngModel)]="product.price"
-              >
-            </mat-form-field>
-          </div>
-          
-          <div>
-            <mat-form-field>
-              <mat-label>Description</mat-label>
-              <input
-                matInput
-                name="description"
-                [(ngModel)]="product.description"
-              >
-            </mat-form-field>
-          </div>
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>Nom du produit</mat-label>
+        <input matInput name="name" required [(ngModel)]="product.name">
+      </mat-form-field>
+    </div>
 
-          <div>
-          <mat-form-field>
-            <mat-label>Sélectionner une boutique</mat-label>
-            <mat-select name="shop" [(ngModel)]="shopName">
-              <mat-option *ngFor="let shop of shops" value="shop">{{ shop.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Prix</mat-label>
+        <input matInput name="price" required [(ngModel)]="product.price">
+      </mat-form-field>
+    </div>
 
-        <div>
-          <mat-form-field>
-            <mat-label>Sélectionner une ou plusieurs catégories</mat-label>
-            <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
-              <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput name="description" [(ngModel)]="product.description">
+      </mat-form-field>
+    </div>
 
+    <div>
+      <mat-form-field>
+        <mat-label>Sélectionner une boutique</mat-label>
+        <mat-select name="shop" [(ngModel)]="shopName">
+          <mat-option *ngFor="let shop of shops" value="shop">{{ shop.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Sélectionner une ou plusieurs catégories</mat-label>
+        <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
+          <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+      <mat-dialog-actions class="center-content">
         <div class="buttons">
-            <mat-dialog-actions class="center-content">
-                <button mat-icon-button color="primary" (click)="goBack(productForm)">
-                    <mat-icon>keyboard_return</mat-icon>
-                </button>
-                <button mat-icon-button color="primary">
-                    <mat-icon>check</mat-icon>
-                </button>
-            </mat-dialog-actions>
+          <div class="cancel-button">
+            <button mat-icon-button color="primary" (click)="goBack(productForm)">
+              <mat-icon>keyboard_return</mat-icon>
+            </button>
+          </div>
+          <div class="edit-button">
+            <button mat-icon-button color="primary">
+              <mat-icon>check</mat-icon>
+            </button>
+          </div>
         </div>
-    </form>
+      </mat-dialog-actions>
+  </form>
 </div>

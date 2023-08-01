@@ -4,30 +4,33 @@
     <form (ngSubmit)="onSubmit(categoryForm)" #categoryForm="ngForm">
         <div>
             <mat-form-field>
-            <mat-label>Nom de la catégorie</mat-label>
-            <input matInput name="name" required [(ngModel)]="category.name">
+                <mat-label>Nom de la catégorie</mat-label>
+                <input matInput name="name" required [(ngModel)]="category.name">
             </mat-form-field>
         </div>
 
         <div>
             <mat-form-field>
-              <mat-label>Produit(s)</mat-label>
-              <mat-select name="products" [(ngModel)]="category.products" multiple>
-                <mat-option *ngFor="let product of products" [value]="product">{{ product.name }}</mat-option>
-              </mat-select>
+                <mat-label>Produit(s)</mat-label>
+                <mat-select name="products" [(ngModel)]="category.products" multiple>
+                    <mat-option *ngFor="let product of products" [value]="product">{{ product.name }}</mat-option>
+                </mat-select>
             </mat-form-field>
-          </div>
-
-        <div class="buttons">
-            <mat-dialog-actions class="center-content">
-                <button mat-icon-button color="primary" (click)="goBack(categoryForm)">
-                    <mat-icon>keyboard_return</mat-icon>
-                </button>
-                <button mat-icon-button color="primary">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </mat-dialog-actions>
         </div>
+
+        <mat-dialog-actions class="center-content">
+            <div class="buttons">
+                <div class="cancel-button">
+                    <button mat-icon-button color="primary" (click)="goBack(categoryForm)">
+                        <mat-icon>keyboard_return</mat-icon>
+                    </button>
+                </div>
+                <div class="create-button">
+                    <button mat-icon-button color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-dialog-actions>
     </form>
 </div>
-

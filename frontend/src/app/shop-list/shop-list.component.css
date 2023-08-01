@@ -26,10 +26,11 @@ h2 {
   }
   
   .table-row-hover:hover {
-    background-color: #45a049;
+    transition: background-color 0.3s;
+    background-color: #D3FCD5;
     cursor: pointer;
   }.rows:hover {
-    background-color: #45a049;
+    background-color: #D3FCD5;
   }
 
   .pagination {
@@ -46,14 +47,10 @@ h2 {
   .header {
     display: flex;
   }
-
-  .create-button {
-    text-align: center;
-  }
   
   .create-button button {
     color: white;
-    padding: 10px 20px;
+    padding: 15px 20px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -65,5 +62,34 @@ h2 {
     background-color: #45a049;
   }
 
+  .edit-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
   
+  .edit-button button:hover {
+    background-color: #458BA0;
+  }
+
+  .delete-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+  }
+  
+  .delete-button button:hover {
+    background-color: #A04545;
+  }
+
+  .buttons {
+    display: flex;
+  }
   

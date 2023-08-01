@@ -37,13 +37,13 @@ h2 {
   
   
   .list {
-    margin-right: 1%;
     width: 80%;
     padding: 2%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     background-color: #fff;
+    margin-right: 1%;
   }
-  
+
   .column {
     text-align: center;
   }
@@ -53,40 +53,37 @@ h2 {
     margin-right: 3%;
     flex: 1;
   }
-  
+
   .search-input {
     width: 100%;
   }
   
   .table-row-hover:hover {
-    background-color: #45a049;
+    transition: background-color 0.3s;
+    background-color: #D3FCD5;
     cursor: pointer;
   }.rows:hover {
-    background-color: #45a049;
+    background-color: #D3FCD5;
   }
-  
+
   .pagination {
     text-align: center;
     padding: 10px 0;
     display: flex;
     justify-content: center;
   }
-  
+
   mat-paginator {
     background-color: #f7f7f7;
   }
-  
+
   .header {
     display: flex;
   }
   
-  .create-button {
-    text-align: center;
-  }
-  
   .create-button button {
     color: white;
-    padding: 10px 20px;
+    padding: 15px 20px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -97,3 +94,35 @@ h2 {
   .create-button button:hover {
     background-color: #45a049;
   }
+
+  .edit-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-button button:hover {
+    background-color: #458BA0;
+  }
+
+  .delete-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+  }
+  
+  .delete-button button:hover {
+    background-color: #A04545;
+  }
+
+  .buttons {
+    display: flex;
+  }
+  
