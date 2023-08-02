@@ -129,9 +129,11 @@ export class ShopDetailComponent implements OnInit {
   addProduct(): void {
     this.productService.getAllProducts("", "", 0, 9999).subscribe(
       (data: { products: Product[]; pagination: any }) => {
+        const productsWithoutShop = data.products.filter(product => product.shop === null);
+        
         const dialogRef = this.dialog.open(AddProductDialogComponent, {
           width: '40%',
-          data: { products: data.products }
+          data: { products: productsWithoutShop }
         });
   
         dialogRef.afterClosed().subscribe((selectedProducts: Product[]) => {
@@ -155,7 +157,7 @@ export class ShopDetailComponent implements OnInit {
         console.error('Erreur lors de la récupération des produits sans shop associé :', error);
       }
     );
-  }
+  }  
 
   onRowClick(event: Event, productId: number) {
     const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
