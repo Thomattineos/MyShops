@@ -124,6 +124,8 @@ public class ProductController {
         if (existingProduct != null) {
             if (updatedProduct.getShop() != null) {
                 existingProduct.setShop(updatedProduct.getShop());
+            } else {
+                existingProduct.setShop(null);
             }
 
             if (updatedProduct.getCategories() != null) {

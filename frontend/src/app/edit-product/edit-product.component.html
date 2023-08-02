@@ -26,9 +26,9 @@
     <div>
       <mat-form-field>
         <mat-label>Sélectionner une boutique</mat-label>
-        <mat-select name="shop" [(ngModel)]="shopName">
+        <mat-select name="shop" [(ngModel)]="product.shop">
           <mat-option [value]="null">Aucune boutique</mat-option>
-          <mat-option *ngFor="let shop of shops" value="shop">{{ shop.name }}</mat-option>
+          <mat-option *ngFor="let shop of shops" [value]="shop">{{ shop.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

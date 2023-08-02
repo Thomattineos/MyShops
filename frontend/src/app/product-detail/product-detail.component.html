@@ -74,7 +74,7 @@
             </div>
 
             <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
-            <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];">
+            <tr mat-row *matRowDef="let category; columns: ['name', 'actions']" [routerLink]="['/categories', category.id]" [ngClass]="'table-row-hover'">
             </tr>
         </table>
     </div>
