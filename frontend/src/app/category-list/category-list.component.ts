@@ -105,4 +105,12 @@ export class CategoryListComponent implements OnInit {
       this.getCategories();
     }
   }
+
+  onRowClick(event: Event, categoryId: number) {
+    const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
+    
+    if (!isDeleteButtonClicked) {
+      this.router.navigate(['/categories', categoryId]);
+    }
+  }
 }

@@ -64,27 +64,22 @@ export class ShopDetailComponent implements OnInit {
     );
   }
 
-  
-
-  editProduct(product: Product): void {
-    this.router.navigate(['/editProduct', product.id]);
-  }
-
-  deleteProduct(product: Product): void {
+  removeProduct(product: Product): void {
     this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '40%',
-      data: { message: 'Êtes-vous sûr de vouloir supprimer le produit ' + product.name + ' ?' }
+      data: { message: 'Êtes-vous sûr de vouloir retirer le produit ' + product.name + ' de la boutique ' + this.shop.name + ' ?' }
     });
 
     this.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.productService.deleteProduct(product).subscribe(
+        product.shop = null;
+        this.productService.updateProduct(product).subscribe(
           () => {
             this.getProductsByShopId();
-            this.openSnackBar('Produit supprimé avec succès', 'Fermer');
+            this.openSnackBar('Produit retiré de la boutique avec succès', 'Fermer');
           },
           (error: any) => {
-            this.openSnackBar('Erreur lors de la suppression du produit', 'Fermer');
+            this.openSnackBar('Erreur lors du retrait du produit', 'Fermer');
           }
         );
       }
