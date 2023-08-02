@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MyMatPaginatorIntl } from './myMatPaginatorIntl/MyMatPaginator';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -68,7 +69,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     MatDialogModule,
     MatSnackBarModule,
     MatPaginatorModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule
     ],
   providers: [{ provide: MatPaginatorIntl, useClass: MyMatPaginatorIntl }],
   bootstrap: [AppComponent]

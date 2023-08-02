@@ -4,7 +4,7 @@
 
   <div class="header">
     <div class="create-button">
-      <button mat-icon-button color="primary" (click)="createShop()">
+      <button mat-icon-button color="primary" matTooltip="Créer une boutique" (click)="createShop()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -81,12 +81,12 @@
         <td mat-cell *matCellDef="let shop">
           <div class="buttons">
             <div class="edit-button">
-              <button mat-icon-button color="primary" (click)="editShop(shop)">
+              <button mat-icon-button color="primary" matTooltip="Modifier la boutique" (click)="editShop(shop)">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
             <div class="delete-button">
-              <button mat-icon-button color="warn" (click)="deleteShop(shop)">
+              <button mat-icon-button color="warn" matTooltip="Supprimer la boutique" (click)="deleteShop(shop)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
