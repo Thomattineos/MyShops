@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Ajouter des produits</h2>
+
+<form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <mat-dialog-content class="center-content">
+        <mat-form-field>
+            <mat-label>Produits</mat-label>
+            <mat-select name="products" [(ngModel)]="selectedProducts" multiple>
+                <mat-option *ngFor="let product of data.products" [value]="product">
+                    {{ product.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="center-content">
+        <div class="buttons">
+            <div class="cancel-button">
+                <button mat-icon-button mat-dialog-close color="primary" (click)="onCancelClick()">
+                    <mat-icon>keyboard_return</mat-icon>
+                </button>
+            </div>
+            <div class="add-button">
+                <button mat-icon-button color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>

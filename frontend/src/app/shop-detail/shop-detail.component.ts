@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
 
 @Component({
   selector: 'app-shop-detail',
@@ -63,9 +64,7 @@ export class ShopDetailComponent implements OnInit {
     );
   }
 
-  createProduct(): void {
-    this.router.navigate(['/createProduct']);
-  }
+  
 
   editProduct(product: Product): void {
     this.router.navigate(['/editProduct', product.id]);
@@ -76,7 +75,7 @@ export class ShopDetailComponent implements OnInit {
       width: '40%',
       data: { message: 'Êtes-vous sûr de vouloir supprimer le produit ' + product.name + ' ?' }
     });
-  
+
     this.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.productService.deleteProduct(product).subscribe(
@@ -94,8 +93,8 @@ export class ShopDetailComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 3000, 
-      horizontalPosition: 'end', 
+      duration: 3000,
+      horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
   }
@@ -131,4 +130,35 @@ export class ShopDetailComponent implements OnInit {
       this.getProductsByShopId();
     }
   }
+
+  addProduct(): void {
+    this.productService.getAllProducts("", "", 0, 9999).subscribe(
+      (data: { products: Product[]; pagination: any }) => {
+        const dialogRef = this.dialog.open(AddProductDialogComponent, {
+          width: '40%',
+          data: { products: data.products }
+        });
+  
+        dialogRef.afterClosed().subscribe((selectedProducts: Product[]) => {
+          if (selectedProducts && selectedProducts.length > 0) {
+            for (const product of selectedProducts) {
+              product.shop = this.shop;              
+              this.productService.updateProduct(product).subscribe(
+                () => {
+                  this.getProductsByShopId();
+                  this.openSnackBar('Produits ajoutés avec succès', 'Fermer');
+                },
+                (error: any) => {
+                  this.openSnackBar('Erreur lors de l\'ajout des produits', 'Fermer');
+                }
+              );
+            }
+          }
+        });
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des produits sans shop associé :', error);
+      }
+    );
+  }  
 }

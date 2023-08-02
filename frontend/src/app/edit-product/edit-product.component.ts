@@ -82,6 +82,7 @@ import { CategoryService } from '../category/category.service';
           }
 
           this.product.categories = this.selectedCategories;
+          
 
           this.productService.updateProduct(this.product).subscribe(
             () => {

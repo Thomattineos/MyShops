@@ -19,6 +19,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MyMatPaginatorIntl } from './myMatPaginatorIntl/MyMatPaginator';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -35,6 +37,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { ShopDetailComponent } from './shop-detail/shop-detail.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { AddProductDialogComponent } from './add-product-dialog/add-product-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     EditCategoryComponent,
     ShopDetailComponent,
     CategoryDetailComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    AddProductDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +74,9 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     MatSnackBarModule,
     MatPaginatorModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatListModule,
+    MatCheckboxModule
     ],
   providers: [{ provide: MatPaginatorIntl, useClass: MyMatPaginatorIntl }],
   bootstrap: [AppComponent]
