@@ -81,12 +81,12 @@
         <td mat-cell *matCellDef="let shop">
           <div class="buttons">
             <div class="edit-button">
-              <button mat-icon-button color="primary" matTooltip="Modifier la boutique" (click)="editShop(shop)">
+              <button mat-icon-button color="primary" (click)="editShop(shop)">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
             <div class="delete-button">
-              <button mat-icon-button color="warn" matTooltip="Supprimer la boutique" (click)="deleteShop(shop)">
+              <button mat-icon-button color="warn" (click)="deleteShop(shop)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -98,9 +98,8 @@
     <tr mat-header-row
       *matHeaderRowDef="['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']">
     </tr>
-    <tr class="rows" mat-row
-      *matRowDef="let shop; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"
-      [routerLink]="['/shops', shop.id]" [ngClass]="'table-row-hover'">
+    <tr mat-row *matRowDef="let shop; columns: ['name', 'openingHours', 'closingHours', 'available', 'numberOfProducts', 'creationDate', 'actions']"
+      [ngClass]="'table-row-hover'" (click)="onRowClick($event, shop.id)">
     </tr>
   </table>
 </div>

@@ -107,7 +107,11 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  onRowClick(productId: number): void {
-    this.router.navigate(['/products', productId]);
-  } 
+  onRowClick(event: Event, productId: number) {
+    const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
+    
+    if (!isDeleteButtonClicked) {
+      this.router.navigate(['/products', productId]);
+    }
+  }
 }

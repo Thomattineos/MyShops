@@ -155,5 +155,13 @@ export class ShopDetailComponent implements OnInit {
         console.error('Erreur lors de la récupération des produits sans shop associé :', error);
       }
     );
-  }  
+  }
+
+  onRowClick(event: Event, productId: number) {
+    const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
+    
+    if (!isDeleteButtonClicked) {
+      this.router.navigate(['/products', productId]);
+    }
+  }
 }

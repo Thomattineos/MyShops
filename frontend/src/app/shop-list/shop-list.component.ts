@@ -115,7 +115,11 @@ export class ShopListComponent implements OnInit {
     }
   }
 
-  onRowClick(shopId: number): void {
-    this.router.navigate(['/shops', shopId]);
+  onRowClick(event: Event, shopId: number) {
+    const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
+    
+    if (!isDeleteButtonClicked) {
+      this.router.navigate(['/shops', shopId]);
+    }
   }  
 }

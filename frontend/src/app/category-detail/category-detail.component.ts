@@ -134,4 +134,12 @@ export class CategoryDetailComponent implements OnInit {
       this.getProductsByCategoryId();
     }
   }
+
+  onRowClick(event: Event, productId: number) {
+    const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
+    
+    if (!isDeleteButtonClicked) {
+      this.router.navigate(['/products', productId]);
+    }
+  }
 }
