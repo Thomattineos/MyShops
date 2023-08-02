@@ -27,5 +27,8 @@ services:
       - "4200:80"
     depends_on:
       - api
+    volumes:
+      - frontend-data:/usr/share/nginx/html
 volumes:
   mysql-data:
+  frontend-data:

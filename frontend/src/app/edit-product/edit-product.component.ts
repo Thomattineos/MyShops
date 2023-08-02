@@ -60,7 +60,6 @@ import { CategoryService } from '../category/category.service';
           (product: Product) => {
             this.product = product;
             this.shopName = product.shop ? product.shop.name : "";
-            console.log(this.shopName);
           },
           (error: any) => {
             console.error('Erreur lors de la récupération des détails du produit :', error);
