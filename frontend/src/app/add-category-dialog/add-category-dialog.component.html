@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Ajouter des catégories</h2>
+
+<form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+    <mat-dialog-content class="center-content">
+        <mat-form-field>
+            <mat-label>Catégories</mat-label>
+            <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
+                <mat-option *ngFor="let category of data.categories" [value]="category">
+                    {{ category.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="center-content">
+        <div class="buttons">
+            <div class="cancel-button">
+                <button mat-icon-button mat-dialog-close color="primary" (click)="onCancelClick()">
+                    <mat-icon>keyboard_return</mat-icon>
+                </button>
+            </div>
+            <div class="add-button">
+                <button mat-icon-button color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</form>

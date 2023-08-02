@@ -13,7 +13,7 @@
 
         <div class="header">
             <div class="create-button">
-                <button mat-icon-button color="primary" matTooltip="Créer un produit" (click)="createProduct()">
+                <button mat-icon-button color="primary" matTooltip="Ajouter une catégorie" (click)="addProduct()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -66,13 +66,8 @@
                     <th mat-header-cell *matHeaderCellDef>Actions</th>
                     <td mat-cell *matCellDef="let product">
                         <div class="buttons">
-                            <div class="edit-button">
-                              <button mat-icon-button color="primary" (click)="editProduct(product)">
-                                <mat-icon>edit</mat-icon>
-                              </button>
-                            </div>
                             <div class="delete-button">
-                              <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+                              <button mat-icon-button color="warn" (click)="removeProduct(product)">
                                 <mat-icon>delete</mat-icon>
                               </button>
                             </div>

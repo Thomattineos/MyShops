@@ -130,6 +130,8 @@ public class ProductController {
 
             if (updatedProduct.getCategories() != null) {
                 existingProduct.setCategories(updatedProduct.getCategories());
+            } else {
+                existingProduct.setCategories(null);
             }
 
             existingProduct.setName(updatedProduct.getName());

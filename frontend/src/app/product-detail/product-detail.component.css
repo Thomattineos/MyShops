@@ -95,20 +95,7 @@ mat-paginator {
   background-color: #45a049;
 }
 
-.edit-button button {
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.edit-button button:hover {
-  background-color: #458BA0;
-}
-
-.delete-button button {
+.remove-button button {
   color: white;
   padding: 10px 20px;
   border: none;
@@ -118,7 +105,7 @@ mat-paginator {
   margin-left: 10px;
 }
 
-.delete-button button:hover {
+.remove-button button:hover {
   background-color: #A04545;
 }
 

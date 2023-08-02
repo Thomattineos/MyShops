@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Shop } from '../shop/shop';
 import { Product } from '../product/product';
-import { ShopService } from '../shop/shop.service';
 import { ProductService } from '../product/product.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Category } from '../category/category';
 import { CategoryService } from '../category/category.service';
+import { AddCategoryDialogComponent } from '../add-category-dialog/add-category-dialog.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -65,30 +64,23 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
-  createCategory(): void {
-    this.router.navigate(['/createCategory']);
-  }
-
-  editCategory(category: Category): void {
-    this.router.navigate(['/editCategory', category.id]);
-  }
-
-  deleteCategory(category: Category): void {
+  removeCategory(category: Category): void {
     this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '40%',
-      data: { message: 'Êtes-vous sûr de vouloir supprimer la catégorie ' + category.name + ' ?' }
+      data: { message: 'Êtes-vous sûr de vouloir retirer la catégorie ' + category.name + ' du produit ' + this.product.name + ' ?' }
     });
   
     this.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.categoryService.deleteCategory(category).subscribe(
+        this.product.categories?.splice(this.product.categories.indexOf(category), 1);
+        this.productService.updateProduct(this.product).subscribe(
           () => {
             this.getCategoriesByProductId();
-            this.openSnackBar('Catégorie supprimée avec succès', 'Fermer');
+            this.openSnackBar('Catégorie retirée du produit avec succès', 'Fermer');
           },
           (error: any) => {
             console.error('Erreur lors de la récupération des catégories associées au produit :', error);
-            this.openSnackBar('Erreur lors de la suppression de la catégorie', 'Fermer');
+            this.openSnackBar('Erreur lors du retrait de la catégorie', 'Fermer');
           }
         );
       }
@@ -133,6 +125,39 @@ export class ProductDetailComponent implements OnInit {
       this.pageSize = pageSize;
       this.getCategoriesByProductId();
     }
+  }
+
+  addCategory(): void {
+    this.categoryService.getAllCategories("", "", 0, 9999).subscribe(
+      (data: { categories: Category[]; pagination: any }) => {
+        const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+          width: '40%',
+          data: { categories: data.categories }
+        });
+  
+        dialogRef.afterClosed().subscribe((selectedCategories: Category[]) => {
+          if (selectedCategories && selectedCategories.length > 0) {
+            if (this.product.categories) {
+              this.product.categories = this.product.categories.concat(selectedCategories);     
+            } else {
+              this.product.categories = selectedCategories;
+            }         
+              this.productService.updateProduct(this.product).subscribe(
+                () => {
+                  this.getCategoriesByProductId();
+                  this.openSnackBar('Catégories ajoutées avec succès au produit', 'Fermer');
+                },
+                (error: any) => {
+                  this.openSnackBar('Erreur lors de l\'ajout des catégories au produit', 'Fermer');
+                }
+              );
+          }
+        });
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des produits sans shop associé :', error);
+      }
+    );
   }
 
   onRowClick(event: Event, categoryId: number) {

@@ -38,6 +38,7 @@ import { ShopDetailComponent } from './shop-detail/shop-detail.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AddProductDialogComponent } from './add-product-dialog/add-product-dialog.component';
+import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { AddProductDialogComponent } from './add-product-dialog/add-product-dial
     ShopDetailComponent,
     CategoryDetailComponent,
     ProductDetailComponent,
-    AddProductDialogComponent
+    AddProductDialogComponent,
+    AddCategoryDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+.center-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .cancel-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cancel-button button:hover {
+    background-color: #458BA0;
+  }
+  
+  .add-button button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+  }
+  
+  .add-button button:hover {
+    background-color: #45a049;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+  

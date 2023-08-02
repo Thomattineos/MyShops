@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Shop } from '../shop/shop';
 import { Product } from '../product/product';
-import { ShopService } from '../shop/shop.service';
 import { ProductService } from '../product/product.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Category } from '../category/category';
 import { CategoryService } from '../category/category.service';
+import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
 
 @Component({
   selector: 'app-category-detail',
@@ -42,7 +41,7 @@ export class CategoryDetailComponent implements OnInit {
   getCategoryDetails(): void {
     this.categoryService.getCategoryById(this.categoryId).subscribe(
       (category: Category) => {
-        this.category = category;
+        this.category = category;       
       },
       (error: any) => {
         console.error('Erreur lors de la récupération des détails de la catégorie :', error);
@@ -56,7 +55,7 @@ export class CategoryDetailComponent implements OnInit {
       (data: { products: Product[]; pagination: any }) => {
         this.products = data.products;
         this.totalPages = data.pagination.totalPages;
-        this.totalElements = data.pagination.totalElements;
+        this.totalElements = data.pagination.totalElements;        
       },
       (error: any) => {
         console.error('Erreur lors de la récupération des produits associés à la catégorie :', error);
@@ -65,30 +64,23 @@ export class CategoryDetailComponent implements OnInit {
     );
   }
 
-  createProduct(): void {
-    this.router.navigate(['/createProduct']);
-  }
-
-  editProduct(product: Product): void {
-    this.router.navigate(['/editProduct', product.id]);
-  }
-
-  deleteProduct(product: Product): void {
+  removeProduct(product: Product): void {
     this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '40%',
-      data: { message: 'Êtes-vous sûr de vouloir supprimer le produit ' + product.name + ' ?' }
+      data: { message: 'Êtes-vous sûr de vouloir retirer le produit ' + product.name + ' de la catégorie ' + this.category.name + ' ?' }
     });
   
     this.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.productService.deleteProduct(product).subscribe(
+        this.category.products?.splice(this.category.products.indexOf(product), 1);
+        this.categoryService.updateCategory(this.category).subscribe(
           () => {
             this.getProductsByCategoryId();
-            this.openSnackBar('Produit supprimé avec succès', 'Fermer');
+            this.openSnackBar('Produit retiré avec succès de la catégorie', 'Fermer');
           },
           (error: any) => {
             console.error('Erreur lors de la récupération des produits associés à la catégorie :', error);
-            this.openSnackBar('Erreur lors de la suppression du produit', 'Fermer');
+            this.openSnackBar('Erreur lors du retrait du produit', 'Fermer');
           }
         );
       }
@@ -133,6 +125,35 @@ export class CategoryDetailComponent implements OnInit {
       this.pageSize = pageSize;
       this.getProductsByCategoryId();
     }
+  }
+
+  addProduct(): void {
+    this.productService.getAllProducts("", "", 0, 9999).subscribe(
+      (data: { products: Product[]; pagination: any }) => {
+        const dialogRef = this.dialog.open(AddProductDialogComponent, {
+          width: '40%',
+          data: { products: data.products }
+        });
+  
+        dialogRef.afterClosed().subscribe((selectedProducts: Product[]) => {
+          if (selectedProducts && selectedProducts.length > 0) {
+              this.category.products = selectedProducts;                           
+              this.categoryService.updateCategory(this.category).subscribe(
+                () => {
+                  this.getProductsByCategoryId();
+                  this.openSnackBar('Produits ajoutés avec succès dans la catégorie', 'Fermer');
+                },
+                (error: any) => {
+                  this.openSnackBar('Erreur lors de l\'ajout des produits', 'Fermer');
+                }
+              );
+            }
+        });
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des produits sans catégorie associée :', error);
+      }
+    );
   }
 
   onRowClick(event: Event, productId: number) {
