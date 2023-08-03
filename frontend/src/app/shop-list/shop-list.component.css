@@ -51,6 +51,7 @@ h2 {
   }
   
   .create-button button {
+    background-color: #D8D8D8;
     color: white;
     padding: 15px 20px;
     border: none;
@@ -65,6 +66,7 @@ h2 {
   }
 
   .edit-button button {
+    background-color: #D8D8D8;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -78,6 +80,7 @@ h2 {
   }
 
   .delete-button button {
+    background-color: #D8D8D8;
     color: white;
     padding: 10px 20px;
     border: none;

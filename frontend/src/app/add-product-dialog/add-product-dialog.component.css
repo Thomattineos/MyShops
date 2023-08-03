@@ -6,6 +6,7 @@
   }
 
   .cancel-button button {
+    background-color: #D8D8D8;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -19,6 +20,7 @@
   }
   
   .add-button button {
+    background-color: #D8D8D8;
     color: white;
     padding: 10px 20px;
     border: none;
