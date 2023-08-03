@@ -26,21 +26,22 @@
     <div>
       <mat-form-field>
         <mat-label>Sélectionner une boutique</mat-label>
-        <mat-select name="shop" [(ngModel)]="product.shop">
+        <mat-select name="shop" [(ngModel)]="productShop" [compareWith]="compareShops">
           <mat-option [value]="null">Aucune boutique</mat-option>
           <mat-option *ngFor="let shop of shops" [value]="shop">{{ shop.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-
+    
     <div>
       <mat-form-field>
         <mat-label>Sélectionner une ou plusieurs catégories</mat-label>
-        <mat-select name="categories" [(ngModel)]="selectedCategories" multiple>
+        <mat-select name="categories" [(ngModel)]="selectedCategories" multiple [compareWith]="compareCategories">
           <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+    
 
       <mat-dialog-actions class="center-content">
         <div class="buttons">

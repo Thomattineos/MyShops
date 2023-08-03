@@ -18,8 +18,8 @@ import { CategoryService } from '../category/category.service';
     product: Product = {} as Product;
     shops: Shop[] = [];
     originalShop: Shop = {} as Shop;
-    shopName: string = "";
-    selectedCategories: Category[] = [];
+    productShop: Shop | null = {} as Shop;
+    selectedCategories: Category[] | null = [];
     categories: Category[] = [];
 
     constructor(
@@ -59,7 +59,8 @@ import { CategoryService } from '../category/category.service';
         this.productService.getProductById(productId).subscribe(
           (product: Product) => {
             this.product = product;
-            this.shopName = product.shop ? product.shop.name : "";
+            this.productShop = product.shop;
+            this.selectedCategories = product.categories;
           },
           (error: any) => {
             console.error('Erreur lors de la récupération des détails du produit :', error);
@@ -113,5 +114,13 @@ import { CategoryService } from '../category/category.service';
         horizontalPosition: 'end', 
         verticalPosition: 'bottom',
       });
+    }
+
+    compareShops(shop1: Shop, shop2: Shop): boolean {
+      return shop1 && shop2 ? shop1.id === shop2.id : shop1 === shop2;
+    }
+    
+    compareCategories(category1: Category, category2: Category): boolean {
+      return category1 && category2 ? category1.id === category2.id : category1 === category2;
     }
   }
