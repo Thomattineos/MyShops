@@ -72,7 +72,10 @@ export class ProductDetailComponent implements OnInit {
   
     this.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.product.categories?.splice(this.product.categories.indexOf(category), 1);
+        if (this.product.categories) {
+          this.product.categories = this.product.categories.filter(c => c.id !== category.id);
+          console.log(this.product.categories);
+        }       
         this.productService.updateProduct(this.product).subscribe(
           () => {
             this.getCategoriesByProductId();
