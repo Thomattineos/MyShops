@@ -35,13 +35,15 @@ h2 {
 
   .pagination {
     text-align: center;
-    padding: 10px 0;
     display: flex;
+    margin-left: 1% auto;
     justify-content: center;
   }
 
   mat-paginator {
-    background-color: #f7f7f7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    width: 30%;
   }
 
   .header {

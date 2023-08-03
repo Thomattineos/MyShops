@@ -1,7 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #F7F7F7}
+html,
+body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #F7F7F7;
+    animation: backgroundFade 10s linear infinite;
+    animation-fill-mode: forwards;
+    transition: background-color 10s;
+}
+
+@keyframes backgroundFade {
+    0% {
+        background-color: #f7f7f7;
+    }
+
+    50% {
+        background-color: #EAFBEB;
+    }
+    100% {
+        background-color: #f7f7f7;
+    }
+}
