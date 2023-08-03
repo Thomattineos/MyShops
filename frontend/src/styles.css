@@ -1,28 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #F7F7F7;
-    animation: backgroundFade 10s linear infinite;
-    animation-fill-mode: forwards;
-    transition: background-color 10s;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #F7F7F7; }
 
 @keyframes backgroundFade {
-    0% {
-        background-color: #f7f7f7;
+    from {
+      background-color: #f7f7f7;
     }
-
-    50% {
-        background-color: #EAFBEB;
+    to {
+      background-color: #D3FCD5;
     }
-    100% {
-        background-color: #f7f7f7;
-    }
-}
+  }
+  
