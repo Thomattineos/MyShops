@@ -100,6 +100,7 @@ h2 {
   }
 
   .filter-button button {
+    margin-left: 3%;
     background-color: #D8D8D8;
     color: white;
     padding: 15px 20px;
@@ -111,7 +112,7 @@ h2 {
   }
   
   .filter-button button:hover {
-    background-color: #45a049;
+    background-color: #458BA0;
   }
 
   .delete-button button {

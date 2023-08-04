@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
+import { AddCategoryDialogComponent } from '../add-category-dialog/add-category-dialog.component';
 
 @Component({
   selector: 'app-shop-detail',
@@ -29,6 +30,7 @@ export class ShopDetailComponent implements OnInit {
   totalElements: number = 0;
   search: string = '';
   distinctCategories: Category[] | null = [];
+  filterNames: string[] = [];
 
   constructor(private route: ActivatedRoute, private shopService: ShopService, private productService: ProductService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -52,8 +54,8 @@ export class ShopDetailComponent implements OnInit {
   }
 
   getProductsByShopId(): void {
-    this.shopService.getProductsByShopId(this.shopId, this.sortBy, this.sortOrder, this.currentPage, this.pageSize, this.search).subscribe(
-      (data: { products: Product[]; categories: Category[]; pagination: any }) => {       
+    this.shopService.getProductsByShopId(this.shopId, this.sortBy, this.sortOrder, this.currentPage, this.pageSize, this.search, this.filterNames).subscribe(
+      (data: { products: Product[]; categories: Category[]; pagination: any }) => {
         this.products = data.products;
         this.totalPages = data.pagination.totalPages;
         this.totalElements = data.pagination.totalElements;
@@ -100,6 +102,28 @@ export class ShopDetailComponent implements OnInit {
     this.getProductsByShopId();
   }
 
+  filterProducts(): void {
+    this.shopService.getProductsByShopId(this.shopId).subscribe(
+      (data: { categories: Category[]; pagination: any }) => {
+        const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+          width: '40%',
+          data: { categories: data.categories }
+        });
+
+        dialogRef.afterClosed().subscribe((selectedCategories: Category[]) => {
+          if (selectedCategories && selectedCategories.length > 0) {
+            this.filterNames = selectedCategories.map(category => category.name);
+            this.currentPage = 0;
+            this.getProductsByShopId();
+          }
+        });
+      },
+      (error: any) => {
+        console.error('Erreur lors de la récupération des catégories :', error);
+      }
+    );
+  }
+
   sort(column: string) {
     if (this.sortBy === column) {
       if (this.sortOrder === 'asc') {
@@ -131,16 +155,16 @@ export class ShopDetailComponent implements OnInit {
     this.productService.getAllProducts("", "", 0, 9999).subscribe(
       (data: { products: Product[]; pagination: any }) => {
         const productsWithoutShop = data.products.filter(product => product.shop === null);
-        
+
         const dialogRef = this.dialog.open(AddProductDialogComponent, {
           width: '40%',
           data: { products: productsWithoutShop }
         });
-  
+
         dialogRef.afterClosed().subscribe((selectedProducts: Product[]) => {
           if (selectedProducts && selectedProducts.length > 0) {
             for (const product of selectedProducts) {
-              product.shop = this.shop;              
+              product.shop = this.shop;
               this.productService.updateProduct(product).subscribe(
                 () => {
                   this.getProductsByShopId();
@@ -158,11 +182,11 @@ export class ShopDetailComponent implements OnInit {
         console.error('Erreur lors de la récupération des produits sans shop associé :', error);
       }
     );
-  }  
+  }
 
   onRowClick(event: Event, productId: number) {
     const isDeleteButtonClicked = (event.target as HTMLElement).closest('.delete-button');
-    
+
     if (!isDeleteButtonClicked) {
       this.router.navigate(['/products', productId]);
     }

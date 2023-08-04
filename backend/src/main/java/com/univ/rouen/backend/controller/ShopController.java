@@ -169,6 +169,7 @@ public class ShopController {
                                                                    @RequestParam(defaultValue = "5") int size,
                                                                    @RequestParam(defaultValue = "") String search,
                                                                    @RequestParam(defaultValue = "") List<String> filters ) {
+        System.out.println("JE SUIS LA");
 
         Optional<Shop> optionalShop = shopRepository.findById(id);
         if (optionalShop.isPresent()) {

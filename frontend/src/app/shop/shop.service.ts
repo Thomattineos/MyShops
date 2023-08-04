@@ -54,7 +54,7 @@ export class ShopService {
     return this.http.delete<void>(url);
   }
 
-  getProductsByShopId(shopId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string, categories?: string[]): Observable<{ products: Product[], categories: Category[], pagination: any }> {
+  getProductsByShopId(shopId: number, sortBy?: string, sortOrder?: string, currentPage?: number, pageSize?: number, search?: string, filters?: string[]): Observable<{ products: Product[], categories: Category[], pagination: any }> {
     let params = new HttpParams();
 
     if (sortBy) {
@@ -72,11 +72,11 @@ export class ShopService {
     if (search) {
       params = params.append('search', search);
     }
-    if (categories) {
-      for (const category of categories) {
-        params = params.append('categories[]', category)
+    if (filters) {      
+      for (const category of filters) {
+        params = params.append('filters', category)
       }
-    }
+    }    
 
     return this.http.get<{ products: Product[], categories: Category[], pagination: any }>(this.apiUrl + "/" + shopId + "/products", { params: params });
   }
