@@ -24,7 +24,7 @@
         </div>
         <div class="detail-item">
             <label class="detail-label">Nombre de catégories associées aux produits :</label>
-            <p class="detail-value">{{ nbCategories }}</p>
+            <p class="detail-value">{{ distinctCategories ? distinctCategories.length : 0 }}</p>
         </div>
     </div>
 
@@ -38,10 +38,16 @@
                 </button>
             </div>
 
+            <div class="filter-button">
+                <button mat-icon-button color="primary" matTooltip="Filtrer les produits" (click)="searchProducts()">
+                    <mat-icon>filter_list</mat-icon>
+                </button>
+            </div>
+
             <div class="search-container">
                 <mat-form-field class="search-input">
                     <input matInput type="text" placeholder="Rechercher un produit" [(ngModel)]="search"
-                        (input)="filterProducts()">
+                        (input)="searchProducts()">
                 </mat-form-field>
             </div>
         </div>

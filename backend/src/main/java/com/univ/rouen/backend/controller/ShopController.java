@@ -167,7 +167,8 @@ public class ShopController {
                                                                    @RequestParam(defaultValue = "asc") String sortOrder,
                                                                    @RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "5") int size,
-                                                                   @RequestParam(defaultValue = "") String search) {
+                                                                   @RequestParam(defaultValue = "") String search,
+                                                                   @RequestParam(defaultValue = "") List<String> filters ) {
 
         Optional<Shop> optionalShop = shopRepository.findById(id);
         if (optionalShop.isPresent()) {
@@ -188,6 +189,10 @@ public class ShopController {
                 productPage = productRepository.getProductsByShopId(id, pageable);
             }
 
+            if (!filters.isEmpty()) {
+                productPage = productRepository.filterByCategoryName(filters, pageable);
+            }
+
             List<Product> products = productPage.getContent();
             long totalElements = productPage.getTotalElements();
             int totalPages = productPage.getTotalPages();
@@ -196,10 +201,12 @@ public class ShopController {
 
             List<Product> productDTOs = new ArrayList<>(products);
 
-            Set<Long> distinctCategories = new HashSet<>();
+            List<Category> distinctCategories = new ArrayList<>();
             for (Product product : products) {
                 for (Category category : product.getCategories()) {
-                    distinctCategories.add(category.getId());
+                    if (!distinctCategories.contains(category)) {
+                        distinctCategories.add(category);
+                    }
                 }
             }
 
@@ -214,8 +221,7 @@ public class ShopController {
 
             response.put("pagination", pagination);
 
-            // Add the numberOfCategories to the response
-            response.put("numberOfCategories", distinctCategories.size());
+            response.put("categories", distinctCategories);
 
             return ResponseEntity.ok(response);
         } else {

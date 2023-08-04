@@ -83,7 +83,7 @@ export class ShopListComponent implements OnInit {
     });
   }
 
-  filterShops(): void {
+  searchShops(): void {
     this.currentPage = 0;
     this.getShops();
   }

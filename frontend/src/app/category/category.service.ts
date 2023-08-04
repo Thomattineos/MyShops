@@ -43,7 +43,7 @@ export class CategoryService {
     return this.http.post<Category>(this.apiUrl, newCategory);
   }
 
-  updateCategory(updatedCategory: Category): Observable<Category> {
+  updateCategory(updatedCategory: Category): Observable<Category> {    
     const url = `${this.apiUrl}/${updatedCategory.id}`;
     return this.http.put<Category>(url, updatedCategory);
   }  
@@ -73,5 +73,15 @@ export class CategoryService {
     }
 
     return this.http.get<{ products: Product[], pagination: any }>(this.apiUrl + "/" + categoryId + "/products", { params: params });
+  }
+
+  addProducts(categoryId: number, products: Product[]): Observable<Category> {
+    const url = `${this.apiUrl}/addProducts/${categoryId}`;
+    return this.http.put<Category>(url, products);
+  }
+
+  removeProduct(categoryId: number, product: Product): Observable<Category> {
+    const url = `${this.apiUrl}/removeProduct/${categoryId}`;
+    return this.http.put<Category>(url, product);
   }
 }

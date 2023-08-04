@@ -75,7 +75,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  filterProducts(): void {
+  searchProducts(): void {
     this.currentPage = 0;
     this.getProducts();
   }

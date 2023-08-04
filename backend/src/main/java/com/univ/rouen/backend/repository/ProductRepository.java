@@ -30,4 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> searchByNameAndCategoryId(@Param("search") String search, @Param("categoryId") Long categoryId, Pageable pageable);
 
     Page<Product> getProductsByCategories_Id(Long id, Pageable pageable);
+
+    @Query("SELECT p FROM Product p JOIN p.categories c WHERE c.name IN :filters")
+    Page<Product> filterByCategoryName(@Param("filters") List<String> filters, Pageable pageable);
+
 }

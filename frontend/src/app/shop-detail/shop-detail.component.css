@@ -99,6 +99,21 @@ h2 {
     background-color: #45a049;
   }
 
+  .filter-button button {
+    background-color: #D8D8D8;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .filter-button button:hover {
+    background-color: #45a049;
+  }
+
   .delete-button button {
     background-color: #D8D8D8;
     color: white;

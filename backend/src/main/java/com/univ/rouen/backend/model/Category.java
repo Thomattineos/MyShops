@@ -18,8 +18,8 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
     @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     List<Product> products;
 
     public Category() { }
@@ -44,6 +44,7 @@ public class Category {
         this.name = name;
     }
 
+    @ManyToMany(mappedBy = "categories")
     public List<Product> getProducts() {
         return products;
     }

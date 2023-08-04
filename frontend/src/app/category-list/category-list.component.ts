@@ -74,7 +74,7 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  filterCategories(): void {
+  searchCategories(): void {
     this.currentPage = 0;
     this.getCategories();
   }

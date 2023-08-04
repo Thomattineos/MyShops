@@ -111,9 +111,6 @@ public class CategoryController {
         Category existingCategory = categoryRepository.findById(id).orElse(null);
         if (existingCategory != null) {
             if (updatedCategory.getProducts() != null) {
-                for (Product p : updatedCategory.getProducts()) {
-                    System.out.println(p.getName());
-                }
                 existingCategory.setProducts(updatedCategory.getProducts());
             } else {
                 existingCategory.setProducts(null);

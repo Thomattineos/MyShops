@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Shop } from '../shop/shop';
 import { Product } from '../product/product';
+import { Category } from '../category/category';
 import { ShopService } from '../shop/shop.service';
 import { ProductService } from '../product/product.service';
 import { Router } from '@angular/router';
@@ -27,7 +28,7 @@ export class ShopDetailComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   search: string = '';
-  nbCategories: number = 0;
+  distinctCategories: Category[] | null = [];
 
   constructor(private route: ActivatedRoute, private shopService: ShopService, private productService: ProductService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -52,11 +53,11 @@ export class ShopDetailComponent implements OnInit {
 
   getProductsByShopId(): void {
     this.shopService.getProductsByShopId(this.shopId, this.sortBy, this.sortOrder, this.currentPage, this.pageSize, this.search).subscribe(
-      (data: { products: Product[]; numberOfCategories: number; pagination: any }) => {
+      (data: { products: Product[]; categories: Category[]; pagination: any }) => {       
         this.products = data.products;
         this.totalPages = data.pagination.totalPages;
         this.totalElements = data.pagination.totalElements;
-        this.nbCategories = data.numberOfCategories;
+        this.distinctCategories = data.categories;
       },
       (error: any) => {
         console.error('Erreur lors de la récupération des produits de la boutique :', error);
@@ -94,7 +95,7 @@ export class ShopDetailComponent implements OnInit {
     });
   }
 
-  filterProducts(): void {
+  searchProducts(): void {
     this.currentPage = 0;
     this.getProductsByShopId();
   }

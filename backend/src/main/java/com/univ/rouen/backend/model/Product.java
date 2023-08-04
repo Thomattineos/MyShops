@@ -35,7 +35,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    List<Category> categories;
+    private List<Category> categories;
 
     public Product() { }
 
@@ -93,12 +93,10 @@ public class Product {
     }
 
     public void addCategory(Category category) {
-        categories.add(category);
-        category.getProducts().add(this);
+        this.getCategories().add(category);
     }
 
     public void removeCategory(Category category) {
-        categories.remove(category);
-        category.getProducts().remove(this);
+        this.getCategories().remove(category);
     }
 }
